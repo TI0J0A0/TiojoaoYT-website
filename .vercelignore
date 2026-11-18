@@ -8,3 +8,4 @@ wireframe_*.png
 .claude/
 .env
 .env.local
+supabase/
