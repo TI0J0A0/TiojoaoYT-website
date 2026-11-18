@@ -1,126 +1,143 @@
 {
-  "_ajuda": "Edite aqui suas notas. status: zerado | jogando | dropado | jogado (ou null). nota: número de 0 a 10 (ex.: 8.5) ou null. comentario: frase curta.",
+  "_ajuda": "Edite aqui suas reviews. nota: número de 0 a 10 (ex.: 8.5) ou null para 'a definir'. review: lista de parágrafos ([] = 'review em breve'). status opcional: zerado | jogando | dropado | null.",
   "games": [
-    {
-      "titulo": "Phantom Blade Zero",
-      "status": "jogando",
-      "nota": null,
-      "comentario": "",
-      "playlist": "https://www.twitch.tv/tiojoaoyt/videos?filter=archives",
-      "capa": "https://i.ytimg.com/vi/Hecyi5_JfUM/hqdefault.jpg",
-      "episodios": null,
-      "inicio": "2026-11-15",
-      "fim": "2026-11-18"
-    },
     {
       "titulo": "Onimusha: Way of the Sword",
       "status": null,
-      "nota": null,
-      "comentario": "",
+      "nota": 8,
       "playlist": "https://www.youtube.com/playlist?list=PLc5pCWKPu7hk",
       "capa": "https://i.ytimg.com/vi/Oy6YzeQQqjM/hqdefault.jpg",
       "episodios": 14,
       "inicio": "2026-11-03",
-      "fim": "2026-11-17"
+      "fim": "2026-11-17",
+      "review": [
+        "Onimusha é um daqueles jogos em que o combate acaba sendo muito mais interessante que a própria história. As lutas são muito bem feitas, os golpes têm peso e as animações deixam cada confronto extremamente satisfatório, principalmente nas batalhas contra os chefes.",
+        "O ponto mais fraco, pra mim, é a história. Ela tem uma proposta interessante, mas acaba sendo um pouco rasa e poderia explorar melhor os personagens e suas motivações.",
+        "Mesmo assim, é um jogo que me divertiu bastante. O combate é tão bem trabalhado que consegue compensar boa parte das limitações da narrativa."
+      ]
     },
     {
       "titulo": "The Last of Us Part II Remastered",
       "status": null,
       "nota": null,
-      "comentario": "",
       "playlist": "https://www.youtube.com/playlist?list=PLD8kpA_r7S6o",
       "capa": "https://i.ytimg.com/vi/uxDOW7u5fWE/hqdefault.jpg",
       "episodios": 4,
       "inicio": "2026-10-08",
-      "fim": "2026-10-12"
-    },
-    {
-      "titulo": "Valorant",
-      "status": null,
-      "nota": null,
-      "comentario": "",
-      "playlist": "https://www.youtube.com/playlist?list=PLWsdJdGc91R4",
-      "capa": "https://i.ytimg.com/vi/lWqpGdMrwtE/hqdefault.jpg",
-      "episodios": 1,
-      "inicio": "2026-10-09",
-      "fim": "2026-10-09"
+      "fim": "2026-10-12",
+      "review": [
+        "The Last of Us Part II é um jogo que não tem medo de fazer escolhas difíceis na história. Ele trabalha muito bem sentimentos como vingança, culpa e perda, colocando o jogador em situações em que nem sempre é fácil concordar com os personagens.",
+        "A jogabilidade também evoluiu bastante em relação ao primeiro jogo. Os movimentos são mais naturais, os inimigos reagem melhor e o combate ficou muito mais intenso, principalmente pela liberdade de alternar entre furtividade e confronto direto.",
+        "É uma experiência pesada, tanto pela história quanto pela violência, mas que consegue fazer o jogador pensar sobre tudo o que aconteceu mesmo depois dos créditos."
+      ]
     },
     {
       "titulo": "The Last of Us",
       "status": null,
-      "nota": null,
-      "comentario": "",
+      "nota": 10,
       "playlist": "https://www.youtube.com/playlist?list=PLUhg8mBwrjJE",
       "capa": "https://i.ytimg.com/vi/2-lDg96iKbs/hqdefault.jpg",
       "episodios": 8,
       "inicio": "2026-08-26",
-      "fim": "2026-10-07"
+      "fim": "2026-10-07",
+      "review": [
+        "Pra mim, The Last of Us é um daqueles jogos em que praticamente tudo funciona muito bem. A história é incrível, mas o que realmente faz a diferença é a maneira como ela desenvolve os personagens e faz você se importar com eles.",
+        "A relação entre Joel e Ellie é construída aos poucos, através de conversas, situações difíceis e pequenos momentos durante a jornada. Nada parece estar ali por acaso.",
+        "A jogabilidade também combina muito bem com a proposta. A falta de recursos, a necessidade de explorar e a tensão dos combates fazem você sentir o peso daquele mundo.",
+        "É um jogo que consegue unir história, mecânicas, ambientação e emoção de uma maneira muito bem amarrada. Uma experiência que, pra mim, merece o 10/10."
+      ]
     },
     {
       "titulo": "GTA VI",
       "status": null,
       "nota": null,
-      "comentario": "",
       "playlist": "https://www.youtube.com/playlist?list=PLWJF1IJE_rVE",
       "capa": "https://i.ytimg.com/vi/a5TNdliDwDw/hqdefault.jpg",
       "episodios": 1,
       "inicio": "2026-08-28",
-      "fim": "2026-08-28"
+      "fim": "2026-08-28",
+      "review": []
     },
     {
       "titulo": "GTA V",
       "status": null,
-      "nota": null,
-      "comentario": "",
+      "nota": 8,
       "playlist": "https://www.youtube.com/playlist?list=PLezCvON8Kaek",
       "capa": "https://i.ytimg.com/vi/h8ek29nD22o/hqdefault.jpg",
       "episodios": 11,
       "inicio": "2026-07-16",
-      "fim": "2026-08-25"
+      "fim": "2026-08-25",
+      "review": [
+        "GTA V foi revolucionário para sua época e continua sendo uma referência quando falamos de mundo aberto. Los Santos é enorme, cheia de atividades e possibilidades, e boa parte da diversão está justamente na liberdade de fazer praticamente o que quiser.",
+        "A ideia de controlar três protagonistas também foi muito interessante, principalmente pela variedade que trouxe para as missões e pela personalidade de cada personagem.",
+        "A história é boa, tem momentos memoráveis e personagens marcantes, mas, na minha opinião, nunca foi o maior destaque do jogo.",
+        "O que realmente torna GTA V especial é seu mundo, a quantidade de coisas que você pode fazer e a liberdade que ele oferece. É um jogo que marcou uma geração e influenciou bastante o gênero."
+      ]
     },
     {
       "titulo": "Little Nightmares",
       "status": null,
       "nota": null,
-      "comentario": "",
       "playlist": "https://www.youtube.com/playlist?list=PLaX6Ok5L4kwM1cnKpFhSOHv_x39XF8yOr",
       "capa": "https://i.ytimg.com/vi/WtRwXO6RFMo/hqdefault.jpg",
       "episodios": 9,
       "inicio": "2025-10-22",
-      "fim": "2025-11-19"
+      "fim": "2025-11-19",
+      "review": [
+        "Little Nightmares é um ótimo exemplo de como um jogo não precisa de muitos diálogos ou explicações para contar uma história interessante.",
+        "A ambientação é, sem dúvida, um dos seus maiores pontos fortes. Os cenários, os sons e o visual dos personagens criam uma sensação constante de desconforto, como se alguma coisa estivesse errada o tempo inteiro.",
+        "A jogabilidade é relativamente simples, misturando exploração, pequenos puzzles e momentos de perseguição. Mas essa simplicidade funciona muito bem com a proposta.",
+        "O mais interessante é como o jogo consegue contar tanta coisa apenas através dos ambientes e dos acontecimentos, deixando bastante espaço para o jogador interpretar a história."
+      ]
     },
     {
       "titulo": "Black Myth: Wukong",
       "status": null,
-      "nota": null,
-      "comentario": "",
+      "nota": 8,
       "playlist": "https://www.youtube.com/playlist?list=PLaX6Ok5L4kwNXqlzydK0WWdR3MiHoS7Pc",
       "capa": "https://i.ytimg.com/vi/eXVnOIAXAyE/hqdefault.jpg",
       "episodios": 9,
       "inicio": "2025-09-11",
-      "fim": "2025-10-19"
+      "fim": "2025-10-19",
+      "review": [
+        "Black Myth: Wukong é um jogo que impressiona bastante, principalmente pelas lutas, pela direção artística e pela riqueza do universo inspirado na mitologia chinesa.",
+        "O combate é muito bem trabalhado e oferece várias possibilidades com habilidades, transformações e diferentes estratégias. As batalhas contra os chefes são o grande destaque, tanto pela dificuldade quanto pela criatividade dos inimigos e suas animações.",
+        "A história também é interessante, mas nem sempre é tão fácil de acompanhar, principalmente para quem não conhece muito da mitologia por trás do jogo.",
+        "Mesmo com alguns pontos que poderiam ser melhores, é uma experiência muito boa. Dá pra perceber o cuidado com os detalhes, especialmente nos combates e na apresentação dos personagens."
+      ]
     },
     {
-      "titulo": "No, I'm Not a Human",
+      "titulo": "No, I’m Not a Human",
       "status": null,
-      "nota": null,
-      "comentario": "",
+      "nota": 7,
       "playlist": "https://www.youtube.com/playlist?list=PLaX6Ok5L4kwNHdW-5RPOzFpqeIAzR1J-w",
       "capa": "https://i.ytimg.com/vi/xcV-k1TUUZo/hqdefault.jpg",
       "episodios": 1,
       "inicio": "2025-09-29",
-      "fim": "2025-09-29"
+      "fim": "2025-09-29",
+      "review": [
+        "No, I’m Not a Human é um jogo que consegue fazer muito com uma ideia relativamente simples. Ele coloca você em situações em que precisa observar as pessoas, tomar decisões e, principalmente, desconfiar de tudo.",
+        "O interessante é que boa parte da tensão vem justamente dessa dúvida constante. Você nunca tem certeza absoluta de estar fazendo a escolha certa, e isso deixa a experiência muito mais envolvente.",
+        "A direção artística combina muito bem com a proposta, e a trilha sonora tem uma identidade única, ajudando bastante a criar aquela sensação estranha e desconfortável.",
+        "Não é um jogo extremamente complexo, mas também não precisa ser. Ele sabe exatamente o tipo de experiência que quer entregar e faz isso muito bem."
+      ]
     },
     {
       "titulo": "The Witcher 3: Wild Hunt",
       "status": null,
-      "nota": null,
-      "comentario": "",
+      "nota": 8,
       "playlist": "https://www.youtube.com/playlist?list=PLaX6Ok5L4kwO-IZIQN0Za3MilXbSIPgs1",
       "capa": "https://i.ytimg.com/vi/wdvM-JY2uN0/hqdefault.jpg",
       "episodios": 3,
       "inicio": "2022-05-10",
-      "fim": "2022-05-26"
+      "fim": "2022-05-26",
+      "review": [
+        "The Witcher 3 é outro jogo que ajudou a transformar o gênero de mundo aberto. O universo é enorme, cheio de histórias interessantes, personagens marcantes e missões secundárias que muitas vezes são tão boas quanto a campanha principal.",
+        "Uma das coisas que mais gosto é como o jogo trabalha as consequências das suas escolhas. Nem sempre existe uma decisão claramente certa ou errada, e isso torna a história muito mais interessante.",
+        "A exploração também é muito boa, principalmente pela variedade dos cenários e pela quantidade de coisas para descobrir.",
+        "O combate e algumas mecânicas já mostram um pouco a idade do jogo, especialmente quando comparados aos títulos mais recentes. Mas a qualidade das histórias e a construção daquele universo continuam sendo seus maiores pontos fortes.",
+        "É um RPG que marcou época e continua sendo uma referência quando o assunto é narrativa em jogos de mundo aberto."
+      ]
     }
   ]
 }

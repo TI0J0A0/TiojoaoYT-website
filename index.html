@@ -48,6 +48,8 @@ section{padding-block:40px}
 .btn-primary{background:linear-gradient(180deg,#ffd0e4,#ff8cc0);color:var(--accent-ink);border-color:transparent;box-shadow:0 4px 0 #b02a6a,0 10px 30px var(--glow)}
 .btn-primary:hover{background:linear-gradient(180deg,#ffe0ee,#ffa3cd)}
 .btn svg{width:14px;height:14px}
+button.btn{font-family:var(--sans);color:var(--text);cursor:pointer}
+button.btn-primary{color:var(--accent-ink)}
 .btn-sm{height:36px;padding:0 14px;font-size:13px;border-radius:10px}
 .link{font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:4px;color:var(--text)}
 
@@ -218,7 +220,7 @@ header.scrolled{background:rgba(10,6,18,.78);backdrop-filter:blur(16px);-webkit-
 .tabs .count{font-size:11px;padding:1px 7px;border-radius:99px;background:rgba(255,255,255,.1)}
 .tabs button[aria-selected="true"] .count{background:rgba(42,4,24,.15)}
 .tabs .count:empty{display:none}
-.rail[hidden]{display:none}
+.rail[hidden],.tabs[hidden]{display:none}
 .rail.shorts{grid-auto-columns:calc((100% - 64px)/5)}
 .rail.shorts .frame{aspect-ratio:9/16}
 .rail.shorts .frame img{object-fit:cover;transform:none}
@@ -268,6 +270,29 @@ header.scrolled{background:rgba(10,6,18,.78);backdrop-filter:blur(16px);-webkit-
 .game .btn{margin-top:auto;align-self:flex-start}
 .game .meta + .btn,.game h3 + .btn{margin-top:12px}
 .games .empty{grid-column:1/-1}
+.game .excerpt{font-size:14px;color:#d9cdea;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.game .excerpt.soon{color:var(--muted);font-style:italic}
+.game .acts{margin-top:auto;padding-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.game .acts .btn{margin-top:0}
+.game .cover{cursor:pointer}
+.review-modal{border:0;padding:0;margin:auto;width:min(720px,100% - 24px);max-height:min(88vh,900px);border-radius:24px;background:var(--surface);color:var(--text);box-shadow:0 40px 120px rgba(0,0,0,.7);overflow:auto}
+.review-modal::backdrop{background:rgba(5,2,10,.7);backdrop-filter:blur(6px)}
+.review-modal[open]{animation:modalIn .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes modalIn{from{opacity:0;transform:translateY(30px) scale(.97)}}
+.rv-cover{position:relative;aspect-ratio:16/7;overflow:hidden}
+.rv-cover img{width:100%;height:100%;object-fit:cover}
+.rv-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,var(--surface))}
+.rv-close{position:absolute;top:14px;right:14px;z-index:1;display:grid;background:rgba(0,0,0,.55);backdrop-filter:blur(6px)}
+.rv-body{padding:0 clamp(20px,4vw,40px) 32px;margin-top:-40px;position:relative}
+.rv-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:18px}
+.rv-head h3{font-size:clamp(38px,6vw,60px);margin:4px 0 6px}
+.rv-head .meta{font-size:13px;color:var(--muted)}
+.rv-score{flex:none;text-align:center;padding:12px 18px;border-radius:18px;background:var(--surface-2);border:1px solid var(--line)}
+.rv-score b{display:block;font-family:var(--display);font-size:52px;line-height:1;background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rv-score span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.rv-text p{color:#ddd2ea;font-size:16px;line-height:1.7;margin-bottom:14px}
+.rv-text p:first-child::first-letter{font-family:var(--display);font-size:3.2em;float:left;line-height:.8;margin:6px 8px 0 0;color:var(--accent)}
+.review-modal .btn-primary{margin-top:8px}
 .insta{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .insta a{position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
 .insta .art{position:absolute;inset:0;transition:transform .4s}
@@ -375,7 +400,7 @@ section,#lives{scroll-margin-top:84px}
       <li><a href="#evento" data-spy="evento">Próxima live</a></li>
       <li><a href="#comunidade" data-spy="comunidade">Comunidade</a></li>
       <li><a href="#youtube" data-spy="youtube">Vídeos</a></li>
-      <li><a href="#notas" data-spy="notas">Notas</a></li>
+      <li><a href="#notas" data-spy="notas">Reviews</a></li>
       <li><a href="#instagram" data-spy="instagram">Instagram</a></li>
       <li class="has-sub">
         <button aria-expanded="false" aria-haspopup="true" id="redesBtn">Redes <span class="caret">▾</span></button>
@@ -413,7 +438,7 @@ section,#lives{scroll-margin-top:84px}
     <a class="big" href="#evento" data-spy="evento">Próxima live</a>
     <a class="big" href="#comunidade" data-spy="comunidade">Comunidade</a>
     <a class="big" href="#youtube" data-spy="youtube">Vídeos</a>
-    <a class="big" href="#notas" data-spy="notas">Notas dos games</a>
+    <a class="big" href="#notas" data-spy="notas">Reviews</a>
     <a class="big" href="#instagram" data-spy="instagram">Instagram</a>
     <a class="big" href="#contato" data-spy="contato">Parcerias</a>
     <h6>Redes</h6>
@@ -518,7 +543,7 @@ section,#lives{scroll-margin-top:84px}
         <div><b id="gameScore">—</b><span>Nota do Tio</span></div>
         <div><b class="w" id="gameHours">—</b><span>Episódios</span></div>
       </div>
-      <div class="row"><a href="#notas" class="btn btn-primary btn-sm">Ver todas as notas</a><a href="#" class="link" id="gameLink" target="_blank" rel="noopener">Ver a playlist</a></div>
+      <div class="row"><button class="btn btn-primary btn-sm" id="gameReviewBtn" type="button">Ler a review</button><a href="#notas" class="link">Ver todas as reviews</a></div>
     </div>
     <div class="card" id="setup">
       <div class="art a1 pattern"></div>
@@ -554,11 +579,11 @@ section,#lives{scroll-margin-top:84px}
 <section id="notas">
   <div class="wrap">
     <div class="sec-head">
-      <div><h2 class="display">Notas dos games</h2><p>Todos os jogos que já passaram pelo canal, com a nota do Tio e a playlist completa.</p></div>
+      <div><h2 class="display">Minhas reviews</h2><p>Os jogos de história que já passaram pelo canal: minha opinião, a nota e a playlist completa.</p></div>
       <div class="g-stats" id="gStats"></div>
     </div>
     <div class="g-tools">
-      <div class="tabs" role="group" aria-label="Filtrar por status" id="gFilters">
+      <div class="tabs" role="group" aria-label="Filtrar por status" id="gFilters" hidden>
         <button data-f="todos" aria-pressed="true">Todos</button>
         <button data-f="zerado" aria-pressed="false">Zerados</button>
         <button data-f="jogando" aria-pressed="false">Jogando</button>
@@ -603,6 +628,17 @@ section,#lives{scroll-margin-top:84px}
     </div>
   </div>
 </section>
+<dialog class="review-modal" id="reviewModal" aria-labelledby="rvTitle">
+  <div class="rv-cover"><img id="rvImg" alt=""><button class="menu-btn rv-close" id="rvClose" aria-label="Fechar review">✕</button></div>
+  <div class="rv-body">
+    <div class="rv-head">
+      <div><span class="eyebrow">Review do Tio</span><h3 class="display" id="rvTitle"></h3><div class="meta" id="rvMeta"></div></div>
+      <div class="rv-score" id="rvScore"></div>
+    </div>
+    <div class="rv-text" id="rvText"></div>
+    <a class="btn btn-primary" id="rvLink" target="_blank" rel="noopener">▶ Assistir a playlist ↗</a>
+  </div>
+</dialog>
 </main>
 
 <!-- ================= FOOTER ================= -->
@@ -726,27 +762,50 @@ const fmtNota = n => n==null ? "—" : Number(n).toLocaleString("pt-BR",{maximum
 const mesAno = iso => iso ? new Date(iso+"T12:00:00").toLocaleDateString("pt-BR",{month:"short",year:"numeric"}).replace(".","") : "";
 const gState = { list:[], filtro:"todos", busca:"", ordem:"recentes" };
 
-function gameCard(g){
+function gameCard(g, i){
+  const temReview = g.review && g.review.length;
   const ring = g.nota==null
-    ? '<div class="score-ring none" title="Ainda sem nota"><b>em breve</b></div>'
+    ? `<div class="score-ring none" title="Nota a definir"><b>${temReview ? "a definir" : "em breve"}</b></div>`
     : `<div class="score-ring" style="--v:${Math.max(0,Math.min(10,g.nota))*10};--ring:${g.nota>=9?'#ffd27a':g.nota>=7?'#ff5fa2':'#ab9cc2'}" title="Nota ${fmtNota(g.nota)} de 10"><b>${fmtNota(g.nota)}</b></div>`;
   const meta = [g.episodios ? `${g.episodios} episódio${g.episodios>1?"s":""}` : "", g.fim ? (g.status==="jogando" ? "desde " + mesAno(g.inicio) : mesAno(g.fim)) : ""].filter(Boolean).join(" · ");
   const isYT = /youtube\.com/.test(g.playlist||"");
-  return `<article class="game">
-    <div class="cover">${g.capa ? `<img src="${esc(g.capa)}" alt="" loading="lazy">` : '<div class="art a1 pattern" style="position:absolute;inset:0"></div>'}
+  return `<article class="game" data-i="${i}">
+    <div class="cover" ${temReview ? `data-open="${i}"` : ""}>${g.capa ? `<img src="${esc(g.capa)}" alt="" loading="lazy">` : '<div class="art a1 pattern" style="position:absolute;inset:0"></div>'}
       ${g.status ? `<span class="st ${esc(g.status)}">${ST_LABEL[g.status]||esc(g.status)}</span>` : ""}${ring}</div>
     <div class="body">
       <h3>${esc(g.titulo)}</h3>
       ${meta ? `<div class="meta">${meta}</div>` : ""}
-      ${g.comentario ? `<p class="cmt">“${esc(g.comentario)}”</p>` : ""}
-      ${g.playlist ? `<a class="btn btn-sm" href="${esc(g.playlist)}" target="_blank" rel="noopener">${isYT ? "▶ Ver playlist" : "▶ Ver as lives"} ↗</a>` : ""}
+      ${temReview ? `<p class="excerpt">${esc(g.review[0])}</p>` : '<p class="excerpt soon">⏳ Review em breve</p>'}
+      <div class="acts">
+        ${temReview ? `<button class="btn btn-primary btn-sm" type="button" data-open="${i}">Ler review</button>` : ""}
+        ${g.playlist ? `<a class="btn btn-sm" href="${esc(g.playlist)}" target="_blank" rel="noopener">${isYT ? "▶ Playlist" : "▶ Lives"} ↗</a>` : ""}
+      </div>
     </div></article>`;
 }
+const modal = $("#reviewModal");
+function openReview(g){
+  if (!g || !g.review || !g.review.length) return;
+  $("#rvImg").src = g.capa || "";
+  $("#rvTitle").textContent = g.titulo;
+  $("#rvMeta").textContent = [g.episodios ? g.episodios + " episódios no YouTube" : "", g.fim ? mesAno(g.fim) : ""].filter(Boolean).join(" · ");
+  $("#rvScore").innerHTML = g.nota==null ? '<b>?</b><span>nota a definir</span>' : `<b>${fmtNota(g.nota)}</b><span>de 10</span>`;
+  $("#rvText").innerHTML = g.review.map(t => `<p>${esc(t)}</p>`).join("");
+  const l = $("#rvLink"); if (g.playlist) { l.href = g.playlist; l.hidden = false; } else l.hidden = true;
+  modal.scrollTop = 0;
+  if (modal.showModal) modal.showModal(); else modal.setAttribute("open","");
+}
+$("#rvClose").onclick = () => modal.close();
+modal.addEventListener("click", e => { if (e.target === modal) modal.close(); });
+$("#gamesGrid").addEventListener("click", e => {
+  const t = e.target.closest("[data-open]"); if (!t) return;
+  openReview(gState.view[+t.dataset.open]);
+});
 function renderGames(){
   const q = gState.busca.trim().toLowerCase();
   let list = gState.list.filter(g => (gState.filtro==="todos" || g.status===gState.filtro) && (!q || g.titulo.toLowerCase().includes(q)));
   const by = { recentes:(a,b)=>(b.fim||"").localeCompare(a.fim||""), nota:(a,b)=>(b.nota??-1)-(a.nota??-1), az:(a,b)=>a.titulo.localeCompare(b.titulo,"pt-BR") };
   list.sort(by[gState.ordem]);
+  gState.view = list;
   $("#gamesGrid").innerHTML = list.length ? list.map(gameCard).join("") : '<p class="empty">Nenhum jogo encontrado.</p>';
   if (typeof revealScan === "function") revealScan();
 }
@@ -755,23 +814,27 @@ function renderStats(all){
   const zer = all.filter(g => g.status==="zerado").length;
   $("#gStats").innerHTML = `<div><b>${all.length}</b><span>jogos</span></div>`
     + (zer ? `<div><b>${zer}</b><span>zerados</span></div>` : "")
-    + (notas.length ? `<div><b>${fmtNota(notas.reduce((a,b)=>a+b,0)/notas.length)}</b><span>média</span></div>` : "");
+    + (notas.length ? `<div><b>${fmtNota(notas.reduce((a,b)=>a+b,0)/notas.length)}</b><span>média</span></div>` : "")
+    + (notas.length ? `<div><b>${fmtNota(Math.max(...notas))}</b><span>maior nota</span></div>` : "");
 }
 function renderUltimoJogo(all){
   const byFim = [...all].sort((a,b)=>(b.fim||"").localeCompare(a.fim||""));
-  const g = byFim.find(x => x.status==="zerado") || byFim.find(x => x.status==="jogando") || byFim[0];
+  const g = byFim.find(x => x.nota!=null && x.review && x.review.length) || byFim.find(x => x.review && x.review.length);
   if (!g) return;
-  const zerado = g.status==="zerado";
-  $("#gameEyebrow").textContent = zerado ? "Último jogo finalizado" : g.status==="jogando" ? "Jogando agora" : "Último jogo";
-  $("#gameTag").textContent = ST_LABEL[g.status] || "Na live";
+  $("#gameEyebrow").textContent = "Última review";
+  $("#gameTag").textContent = g.nota!=null ? `⭐ ${fmtNota(g.nota)}/10` : "Review";
   $("#gameTitle").textContent = g.titulo;
   $("#gameScore").textContent = fmtNota(g.nota);
   $("#gameHours").textContent = g.episodios || "—";
   if (g.capa) { const a=$("#gameArt"); a.className="art"; a.style.backgroundImage=`url('${g.capa}')`; }
-  if (g.playlist) $("#gameLink").href = g.playlist; else $("#gameLink").remove();
+  $("#gameReviewBtn").onclick = () => openReview(g);
 }
 fetch("data/games.json",{cache:"no-cache"}).then(r => r.ok ? r.json() : Promise.reject()).then(d => {
   gState.list = d.games || [];
+  const usados = new Set(gState.list.map(g => g.status).filter(Boolean));
+  const f = $("#gFilters");
+  f.querySelectorAll("button[data-f]").forEach(b => { if (b.dataset.f !== "todos" && !usados.has(b.dataset.f)) b.remove(); });
+  f.hidden = usados.size === 0;
   renderStats(gState.list); renderGames(); renderUltimoJogo(gState.list);
 }).catch(() => { $("#gamesGrid").innerHTML = '<p class="empty">Não foi possível carregar a lista de jogos.</p>'; });
 $("#gFilters").addEventListener("click", e => {
