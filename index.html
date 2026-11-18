@@ -52,22 +52,52 @@ section{padding-block:40px}
 .link{font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:4px;color:var(--text)}
 
 /* ---------- Header ---------- */
-header{position:fixed;inset:0 0 auto;z-index:50;transition:background .2s,backdrop-filter .2s}
-header.scrolled{background:rgba(10,6,18,.75);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:900;font-size:24px;letter-spacing:.02em}
-.brand .logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);font-size:20px}
-.brand span.dim{color:var(--muted)}
-.nav-right{display:flex;gap:10px;align-items:center}
-.menu-btn{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);display:grid;place-items:center;cursor:pointer;color:var(--text)}
+header{position:fixed;inset:0 0 auto;z-index:50;border-bottom:1px solid transparent;transition:background .25s,border-color .25s}
+header.scrolled{background:rgba(10,6,18,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-color:var(--line)}
+.nav{display:flex;align-items:center;gap:20px;height:72px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:900;font-size:24px;letter-spacing:.02em;flex:none}
+.brand .logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);font-size:20px;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.brand:hover .logo{transform:rotate(-8deg) scale(1.08)}
+.brand span.dim{background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent}
+.menu{display:flex;align-items:center;gap:22px;list-style:none;margin:0 auto}
+.menu > li > a,.menu > li > button{position:relative;display:inline-flex;align-items:center;gap:4px;font:600 15px var(--sans);color:#d9cdea;padding:8px 2px;background:none;border:0;cursor:pointer;transition:color .18s;white-space:nowrap}
+.menu > li > a:hover,.menu > li > button:hover,.menu > li > a.active{color:var(--text)}
+.menu > li > a::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;border-radius:3px;background:var(--sunset);transform:scaleX(0);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.menu > li > a:hover::after{transform:scaleX(.45)}
+.menu > li > a.active::after{transform:scaleX(1)}
+.menu .caret{font-size:10px;transition:transform .2s}
+.has-sub{position:relative}
+.has-sub:hover .caret,.has-sub.open .caret{transform:rotate(180deg)}
+.sub{position:absolute;top:calc(100% + 14px);left:50%;min-width:230px;padding:8px;border-radius:18px;background:rgba(20,12,31,.96);backdrop-filter:blur(16px);border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.5);opacity:0;pointer-events:none;transform:translate(-50%,8px);transition:opacity .2s,transform .2s}
+.sub::before{content:"";position:absolute;inset:-16px 0 auto;height:16px}
+.has-sub:hover .sub,.has-sub.open .sub{opacity:1;pointer-events:auto;transform:translate(-50%,0)}
+.sub a{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:12px;font-size:14px;font-weight:600;color:#e6dcf3;transition:background .15s,transform .15s}
+.sub a:hover{background:var(--surface-2);transform:translateX(3px)}
+.sub small,.drawer-socials small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:12px;font-weight:800;flex:none}
+.ic.tw{background:#9146ff;color:#fff}.ic.ki{background:#53fc18;color:#000}.ic.yt{background:#ff0033;color:#fff}
+.ic.ig{background:linear-gradient(45deg,#feda75,#d62976,#4f5bd5);color:#fff}.ic.dc{background:#5865f2;color:#fff}
+.ic.x{background:#000;color:#fff;border:1px solid #333}.ic.tip{background:var(--sunset);color:var(--accent-ink)}
+.nav-right{display:flex;gap:10px;align-items:center;flex:none;margin-left:auto}
+.menu + .nav-right{margin-left:0}
+.menu-btn{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);display:none;place-items:center;cursor:pointer;color:var(--text)}
 .dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
-.drawer{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .2s}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--sunset);transform-origin:left;transform:scaleX(0)}
+@media (max-width:1100px){ .menu{display:none} .menu-btn{display:grid} .menu + .nav-right{margin-left:auto} }
+.drawer{position:fixed;inset:0;z-index:60;background:rgba(5,2,10,.6);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .25s}
 .drawer.open{opacity:1;pointer-events:auto}
-.drawer nav{position:absolute;right:0;top:0;bottom:0;width:min(340px,86vw);background:var(--surface);border-left:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:4px;transform:translateX(100%);transition:transform .25s}
+.drawer nav{position:absolute;right:0;top:0;bottom:0;width:min(380px,90vw);background:var(--surface);border-left:1px solid var(--line);padding:18px 22px 28px;display:flex;flex-direction:column;overflow-y:auto;transform:translateX(100%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .drawer.open nav{transform:none}
-.drawer nav a{padding:14px 12px;border-radius:12px;font-family:var(--display);font-weight:800;font-size:28px;text-transform:uppercase}
-.drawer nav a:hover{background:var(--surface-2);color:var(--accent)}
-.drawer .close{align-self:flex-end;margin-bottom:12px}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.drawer-head .menu-btn{display:grid}
+.drawer h6{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:14px 0 6px}
+.drawer .big{padding:6px 4px;font-family:var(--display);font-weight:800;font-size:30px;text-transform:uppercase;line-height:1.1;opacity:0;transform:translateX(24px);transition:opacity .35s,transform .35s,color .15s}
+.drawer.open .big{opacity:1;transform:none}
+.drawer .big:hover,.drawer .big.active{color:var(--accent)}
+.drawer-socials{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.drawer-socials a{display:flex;align-items:center;gap:10px;padding:8px;border-radius:12px;background:var(--surface-2);font-size:14px;font-weight:600}
+.drawer-socials small{display:none}
+.drawer .btn-primary{margin-top:22px;justify-content:center}
 
 /* ---------- Hero ---------- */
 .hero{position:relative;min-height:min(760px,100vh);padding-top:110px;padding-bottom:40px;overflow:hidden;isolation:isolate}
@@ -260,6 +290,38 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:48px 0 36px}
   .card{min-height:300px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+/* ---------- Movimento ---------- */
+section,#lives{scroll-margin-top:84px}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.04em}
+.hero h1 .line>span{display:block;animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 .line:nth-child(3)>span{animation-delay:.08s}.hero h1 .line:nth-child(4)>span{animation-delay:.16s}
+.hero h1 .sm{animation:fade .8s .1s both}
+.hero .lead{animation:fadeUp .8s .3s both}.hero .actions{animation:fadeUp .8s .4s both}
+.wanted i{display:inline-block;animation:pop .5s cubic-bezier(.3,1.8,.5,1) both}
+.wanted i:nth-child(1){animation-delay:.5s}.wanted i:nth-child(2){animation-delay:.6s}.wanted i:nth-child(3){animation-delay:.7s}.wanted i:nth-child(4){animation-delay:.8s}.wanted i:nth-child(5){animation-delay:.9s}
+.hero-art{transform:perspective(1000px) rotateY(calc(var(--mx,0)*7deg)) rotateX(calc(var(--my,0)*-7deg));transition:transform .4s ease-out;animation:fade 1s .2s both}
+.hero-frame{animation:float 7s ease-in-out infinite}
+.hero-art .badge-name{animation:badge 1s .6s cubic-bezier(.3,1.5,.5,1) both}
+.hero-bg::before{translate:calc(var(--mx,0)*-26px) calc(var(--my,0)*-16px);transition:translate .5s ease-out}
+.lives{animation:fadeUp .8s .55s both}
+@keyframes rise{from{transform:translateY(105%)}}
+@keyframes fade{from{opacity:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}}
+@keyframes pop{from{opacity:0;transform:scale(0) rotate(-40deg)}}
+@keyframes float{50%{translate:0 -12px}}
+@keyframes badge{from{opacity:0;transform:translateX(-50%) rotate(-12deg) scale(.6)}}
+.ticker{position:relative;z-index:2;margin:10px -2% 30px;transform:rotate(-1.6deg);background:var(--sunset);color:var(--accent-ink);overflow:hidden;box-shadow:0 10px 40px rgba(255,95,162,.25)}
+.ticker-track{display:flex;width:max-content;gap:26px;padding:12px 0;animation:marquee 34s linear infinite;font-family:var(--display);font-weight:900;font-size:26px;text-transform:uppercase;white-space:nowrap}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker b{opacity:.6}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.reveal{opacity:0;translate:0 34px;transition:opacity .8s ease,translate .8s cubic-bezier(.2,.7,.2,1),transform .25s,border-color .2s,box-shadow .2s}
+.reveal.in{opacity:1;translate:0 0}
+.live-card.is-live{animation:glow 2.4s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 1px var(--accent) inset,0 10px 50px rgba(255,95,162,.4)}}
+.play{transition:transform .25s cubic-bezier(.3,1.6,.5,1),background .2s}
+.vid:hover .play,.thumb:hover .play{transform:scale(1.15);background:#fff}
+@media (hover:none){.hero-art{transform:none}}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
 </style>
 </head>
@@ -268,37 +330,74 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:48px 0 36px}
 <!-- ================= HEADER ================= -->
 <header id="top">
   <div class="wrap nav">
-    <a href="#" class="brand" aria-label="Tiojoao — início"><span class="logo">TJ</span><span>TIOJOAO<span class="dim">.TV</span></span></a>
+    <a href="#inicio" class="brand" aria-label="Tiojoao — início"><span class="logo">TJ</span><span>TIOJOAO<span class="dim">YT</span></span></a>
+    <ul class="menu" aria-label="Menu principal">
+      <li><a href="#inicio" data-spy="inicio">Início</a></li>
+      <li><a href="#lives" data-spy="lives">Lives</a></li>
+      <li><a href="#evento" data-spy="evento">Próxima live</a></li>
+      <li><a href="#comunidade" data-spy="comunidade">Comunidade</a></li>
+      <li><a href="#youtube" data-spy="youtube">Vídeos</a></li>
+      <li><a href="#instagram" data-spy="instagram">Instagram</a></li>
+      <li class="has-sub">
+        <button aria-expanded="false" aria-haspopup="true" id="redesBtn">Redes <span class="caret">▾</span></button>
+        <div class="sub">
+          <a href="https://www.twitch.tv/tiojoaoyt" target="_blank" rel="noopener"><span class="ic tw">▣</span><span>Twitch<small>Lives principais</small></span></a>
+          <a href="https://kick.com/tiojoao" target="_blank" rel="noopener"><span class="ic ki">K</span><span>Kick<small>Lives</small></span></a>
+          <a href="https://www.youtube.com/channel/UCpT-H-0kRTNbY6bQjK_hjJQ" target="_blank" rel="noopener"><span class="ic yt">▶</span><span>YouTube<small>Vídeos e Shorts</small></span></a>
+          <a href="https://www.instagram.com/tiojoaoyt" target="_blank" rel="noopener"><span class="ic ig">◎</span><span>Instagram<small>@tiojoaoyt</small></span></a>
+          <a href="https://discord.com/invite/d88egTm7" target="_blank" rel="noopener"><span class="ic dc">◆</span><span>Discord<small>Comunidade</small></span></a>
+          <a href="https://twitter.com/joaoguiar_5" target="_blank" rel="noopener"><span class="ic x">𝕏</span><span>X / Twitter<small>Novidades</small></span></a>
+          <a href="https://streamelements.com/tiojoaoyt/tip" target="_blank" rel="noopener"><span class="ic tip">♥</span><span>Apoiar<small>Mensagem na live</small></span></a>
+        </div>
+      </li>
+      <li><a href="#contato" data-spy="contato">Parcerias</a></li>
+    </ul>
     <div class="nav-right">
       <a href="#lives" class="btn btn-primary btn-sm"><span class="dot"></span> Ver lives</a>
-      <button class="menu-btn" id="openMenu" aria-label="Abrir menu">
+      <button class="menu-btn" id="openMenu" aria-label="Abrir menu" aria-controls="drawer" aria-expanded="false">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
   </div>
+  <div class="progress" id="progress"></div>
 </header>
 
 <div class="drawer" id="drawer" aria-hidden="true">
-  <nav aria-label="Menu principal">
-    <button class="menu-btn close" id="closeMenu" aria-label="Fechar menu">✕</button>
-    <a href="#lives">Lives</a>
-    <a href="#evento">Próxima live</a>
-    <a href="#comunidade">Comunidade</a>
-    <a href="#youtube">Vídeos</a>
-    <a href="#instagram">Instagram</a>
-    <a href="#setup">Setup</a>
-    <a href="#contato">Parcerias</a>
+  <nav aria-label="Menu">
+    <div class="drawer-head">
+      <span class="brand"><span class="logo">TJ</span><span>TIOJOAO<span class="dim">YT</span></span></span>
+      <button class="menu-btn close" id="closeMenu" aria-label="Fechar menu">✕</button>
+    </div>
+    <h6>Navegar</h6>
+    <a class="big" href="#inicio" data-spy="inicio">Início</a>
+    <a class="big" href="#lives" data-spy="lives">Lives</a>
+    <a class="big" href="#evento" data-spy="evento">Próxima live</a>
+    <a class="big" href="#comunidade" data-spy="comunidade">Comunidade</a>
+    <a class="big" href="#youtube" data-spy="youtube">Vídeos</a>
+    <a class="big" href="#instagram" data-spy="instagram">Instagram</a>
+    <a class="big" href="#contato" data-spy="contato">Parcerias</a>
+    <h6>Redes</h6>
+    <div class="drawer-socials">
+      <a href="https://www.twitch.tv/tiojoaoyt" target="_blank" rel="noopener"><span class="ic tw">▣</span><span>Twitch<small>Lives principais</small></span></a>
+          <a href="https://kick.com/tiojoao" target="_blank" rel="noopener"><span class="ic ki">K</span><span>Kick<small>Lives</small></span></a>
+          <a href="https://www.youtube.com/channel/UCpT-H-0kRTNbY6bQjK_hjJQ" target="_blank" rel="noopener"><span class="ic yt">▶</span><span>YouTube<small>Vídeos e Shorts</small></span></a>
+          <a href="https://www.instagram.com/tiojoaoyt" target="_blank" rel="noopener"><span class="ic ig">◎</span><span>Instagram<small>@tiojoaoyt</small></span></a>
+          <a href="https://discord.com/invite/d88egTm7" target="_blank" rel="noopener"><span class="ic dc">◆</span><span>Discord<small>Comunidade</small></span></a>
+          <a href="https://twitter.com/joaoguiar_5" target="_blank" rel="noopener"><span class="ic x">𝕏</span><span>X / Twitter<small>Novidades</small></span></a>
+          <a href="https://streamelements.com/tiojoaoyt/tip" target="_blank" rel="noopener"><span class="ic tip">♥</span><span>Apoiar<small>Mensagem na live</small></span></a>
+    </div>
+    <a href="#lives" class="btn btn-primary">Ver lives</a>
   </nav>
 </div>
 
 <main>
 <!-- ================= HERO ================= -->
-<section class="hero">
+<section class="hero" id="inicio">
   <div class="hero-bg"></div>
   <div class="wrap hero-grid">
     <div>
       <div class="wanted" aria-hidden="true"><i>★</i><i>★</i><i>★</i><i class="off">★</i><i class="off">★</i>&nbsp; Procurado</div>
-      <h1 class="display"><span class="sm">Tiojoao.tv</span>Fique por<br>dentro<br>de tudo</h1>
+      <h1 class="display"><span class="sm">tiojoaoyt.com</span><span class="line"><span>Fique por</span></span><span class="line"><span>dentro</span></span><span class="line"><span>de tudo</span></span></h1>
       <p class="lead">Lives na Kick, Twitch e YouTube, vídeos, jogos zerados e a comunidade no Discord — tudo num lugar só.</p>
       <div class="actions">
         <a href="#lives" class="btn btn-primary">Ver lives</a>
@@ -318,6 +417,8 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:48px 0 36px}
     <div class="lives-foot"><a href="#lives" class="link">Abrir a central de lives</a></div>
   </div>
 </section>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-track"><span>Ao vivo na Twitch</span><b>★</b> <span>Kick</span><b>★</b> <span>YouTube</span><b>★</b> <span>Gameplay</span><b>★</b> <span>Zerando jogos</span><b>★</b> <span>Comunidade no Discord</span><b>★</b> <span>Shorts toda semana</span><b>★</b> <span>Vice City vibes</span><b>★</b> <span>Ao vivo na Twitch</span><b>★</b> <span>Kick</span><b>★</b> <span>YouTube</span><b>★</b> <span>Gameplay</span><b>★</b> <span>Zerando jogos</span><b>★</b> <span>Comunidade no Discord</span><b>★</b> <span>Shorts toda semana</span><b>★</b> <span>Vice City vibes</span><b>★</b></div></div>
 
 <!-- ================= PRÓXIMA LIVE / EVENTO ================= -->
 <section id="evento">
@@ -488,6 +589,12 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ICONS = { kick:"K", twitch:"▣", youtube:"▶" };
 
+function ago(iso){
+  // compara dias do calendário (no fuso de quem visita), não blocos de 24h
+  const day = t => { const x = new Date(t); x.setHours(0,0,0,0); return x; };
+  const d = Math.round((day(Date.now()) - day(iso)) / 86400000);
+  return d <= 0 ? "hoje" : d === 1 ? "ontem" : d < 30 ? `há ${d} dias` : "em " + new Date(iso).toLocaleDateString("pt-BR");
+}
 /* Status das lives */
 function renderLives(){
 $("#livesGrid").innerHTML = CONFIG.lives.map(l => {
@@ -496,7 +603,7 @@ $("#livesGrid").innerHTML = CONFIG.lives.map(l => {
              : '<span class="chip">Status indisponível</span>';
   const sub = l.status==="live"
     ? `${l.viewers!=null ? '👁 '+Number(l.viewers).toLocaleString('pt-BR')+' assistindo · ' : ''}${esc(l.title)}`
-    : esc(l.title);
+    : l.lastLive ? `Última live ${ago(l.lastLive.at)}: ${esc(l.lastLive.title)}` : esc(l.title);
   const sub2 = l.status==="live" && l.game ? `<p class="game">🎮 ${esc(l.game)}</p>` : "";
   return `<a class="live-card ${l.status==='live'?'is-live':''}" href="${esc(l.url)}" target="_blank" rel="noopener">
     <span class="ico ${l.id}">${ICONS[l.id]}</span>
@@ -521,6 +628,7 @@ function loadLive(){
       l.status = info.status;
       l.viewers = info.viewers ?? null;
       l.game = info.game || null;
+      l.lastLive = info.lastLive || null;
       l.title = info.status==="live" && info.title ? info.title : l.defaultTitle;
     }
     renderLives();
@@ -570,6 +678,7 @@ function renderVideos(list){
   $("#railShorts").innerHTML = shorts.length ? shorts.map(card).join("") : '<p class="empty">Nenhum short recente.</p>';
   $("#countVideos").textContent = vids.length || "";
   $("#countShorts").textContent = shorts.length || "";
+  if (typeof revealScan === "function") revealScan();
   // Destaques do bloco "Próxima live": os 2 vídeos longos mais recentes
   const longos = list.filter(v => !v.short && v.thumb).slice(0,2);
   document.querySelectorAll("#evento .thumb").forEach((a,i) => {
@@ -622,14 +731,64 @@ function loadDiscord(){
 }
 loadDiscord(); setInterval(loadDiscord, 120000);
 
-/* Header + menu */
-addEventListener("scroll", () => $("header").classList.toggle("scrolled", scrollY>20), {passive:true});
+/* Header: fundo ao rolar, barra de progresso e item ativo do menu */
+const header = $("header"), progress = $("#progress");
+const spyLinks = [...document.querySelectorAll("[data-spy]")];
+const spyIds = [...new Set(spyLinks.map(a => a.dataset.spy))];
+function onScroll(){
+  header.classList.toggle("scrolled", scrollY > 20);
+  const max = document.documentElement.scrollHeight - innerHeight;
+  progress.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+  let current = spyIds[0];
+  for (const id of spyIds) { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top <= 140) current = id; }
+  if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) current = spyIds[spyIds.length-1];
+  spyLinks.forEach(a => a.classList.toggle("active", a.dataset.spy === current));
+}
+addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+/* Menu "Redes" (clique abre no celular/teclado) */
+const redes = $(".has-sub"), redesBtn = $("#redesBtn");
+redesBtn.onclick = e => { e.stopPropagation(); const o = !redes.classList.contains("open"); redes.classList.toggle("open", o); redesBtn.setAttribute("aria-expanded", o); };
+document.addEventListener("click", e => { if (!redes.contains(e.target)) { redes.classList.remove("open"); redesBtn.setAttribute("aria-expanded", false); } });
+
+/* Menu lateral (celular) */
 const drawer = $("#drawer");
-const setMenu = open => { drawer.classList.toggle("open",open); drawer.setAttribute("aria-hidden",!open); };
+const setMenu = open => {
+  drawer.classList.toggle("open",open); drawer.setAttribute("aria-hidden",!open);
+  $("#openMenu").setAttribute("aria-expanded", open);
+  document.body.style.overflow = open ? "hidden" : "";
+  drawer.querySelectorAll(".big").forEach((a,i) => a.style.transitionDelay = open ? (80 + i*40)+"ms" : "0ms");
+};
 $("#openMenu").onclick = () => setMenu(true);
 $("#closeMenu").onclick = () => setMenu(false);
-drawer.onclick = e => { if (e.target===drawer || e.target.tagName==="A") setMenu(false); };
-addEventListener("keydown", e => { if (e.key==="Escape") setMenu(false); });
+drawer.onclick = e => { if (e.target===drawer || e.target.closest("a")) setMenu(false); };
+addEventListener("keydown", e => { if (e.key==="Escape") { setMenu(false); redes.classList.remove("open"); redesBtn.setAttribute("aria-expanded", false); } });
+
+/* Elementos aparecem ao rolar */
+const io = "IntersectionObserver" in window ? new IntersectionObserver(entries => entries.forEach(en => {
+  if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+}), {threshold:.12, rootMargin:"0px 0px -40px 0px"}) : null;
+function revealScan(){
+  if (!io) return;
+  document.querySelectorAll(".feature, .card, .sec-head, .tabs, .vid, .insta a, .cta, .foot-top, .foot-cols > div").forEach(el => {
+    if (el.dataset.rv) return; el.dataset.rv = 1;
+    const d = Math.min([...el.parentElement.children].indexOf(el), 6) * 70;
+    el.style.transitionDelay = `${d}ms, ${d}ms, 0ms, 0ms, 0ms`;
+    el.classList.add("reveal"); io.observe(el);
+  });
+}
+revealScan();
+
+/* Arte do topo acompanha o mouse */
+const hero = $(".hero");
+if (matchMedia("(hover:hover) and (prefers-reduced-motion:no-preference)").matches) {
+  hero.addEventListener("mousemove", e => {
+    const r = hero.getBoundingClientRect();
+    hero.style.setProperty("--mx", ((e.clientX - r.left) / r.width - .5).toFixed(3));
+    hero.style.setProperty("--my", ((e.clientY - r.top) / r.height - .5).toFixed(3));
+  });
+  hero.addEventListener("mouseleave", () => { hero.style.setProperty("--mx",0); hero.style.setProperty("--my",0); });
+}
 $("#year").textContent = new Date().getFullYear();
 </script>
 </body>

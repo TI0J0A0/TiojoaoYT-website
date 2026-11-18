@@ -29,17 +29,25 @@ async function twitchStatus() {
   const id = process.env.TWITCH_CLIENT_ID;
   if (!id || !process.env.TWITCH_CLIENT_SECRET) return { status: "unknown", error: "sem credenciais" };
   const login = process.env.TWITCH_LOGIN || "tiojoaoyt";
-  const call = async (force) => fetch(
-    `https://api.twitch.tv/helix/streams?user_login=${encodeURIComponent(login)}`,
-    { headers: { "Client-Id": id, Authorization: `Bearer ${await getAppToken(force)}` } },
-  );
+  const helix = async (path) => {
+    const call = async (force) => fetch(`https://api.twitch.tv/helix/${path}`,
+      { headers: { "Client-Id": id, Authorization: `Bearer ${await getAppToken(force)}` } });
+    let r = await call(false);
+    if (r.status === 401) r = await call(true); // token expirou: pega outro e tenta de novo
+    if (!r.ok) throw new Error(`helix ${r.status}`);
+    return (await r.json()).data || [];
+  };
 
-  let r = await call(false);
-  if (r.status === 401) r = await call(true); // token expirou: pega outro e tenta de novo
-  if (!r.ok) throw new Error(`helix ${r.status}`);
-
-  const s = (await r.json()).data?.[0];
-  if (!s) return { status: "offline" };
+  const [s] = await helix(`streams?user_login=${encodeURIComponent(login)}`);
+  if (!s) {
+    // offline: tenta mostrar a última live (VOD salvo na Twitch)
+    try {
+      const [u] = await helix(`users?login=${encodeURIComponent(login)}`);
+      const [v] = u ? await helix(`videos?user_id=${u.id}&type=archive&first=1`) : [];
+      if (v) return { status: "offline", lastLive: { title: v.title, at: v.created_at, url: v.url, duration: v.duration } };
+    } catch (e) { console.error("twitch vod:", e.message); }
+    return { status: "offline" };
+  }
   return {
     status: "live",
     viewers: s.viewer_count,
