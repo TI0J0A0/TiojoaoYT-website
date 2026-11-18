@@ -1,0 +1,64 @@
+// GET /api/live — diz se o Tiojoao está ao vivo (por enquanto: Twitch).
+// Roda no servidor (Vercel Function), então o Client Secret nunca vai para o navegador.
+//
+// Variáveis de ambiente necessárias (configure na Vercel ou no arquivo .env.local):
+//   TWITCH_CLIENT_ID      → Client ID do app em dev.twitch.tv
+//   TWITCH_CLIENT_SECRET  → Client Secret do app
+//   TWITCH_LOGIN          → (opcional) nome do canal, padrão "tiojoaoyt"
+
+let token = { value: null, expiresAt: 0 };
+
+async function getAppToken(force = false) {
+  if (!force && token.value && Date.now() < token.expiresAt) return token.value;
+  const r = await fetch("https://id.twitch.tv/oauth2/token", {
+    method: "POST",
+    body: new URLSearchParams({
+      client_id: process.env.TWITCH_CLIENT_ID,
+      client_secret: process.env.TWITCH_CLIENT_SECRET,
+      grant_type: "client_credentials",
+    }),
+  });
+  if (!r.ok) throw new Error(`token ${r.status}`);
+  const j = await r.json();
+  // renova 5 min antes de expirar
+  token = { value: j.access_token, expiresAt: Date.now() + (j.expires_in - 300) * 1000 };
+  return token.value;
+}
+
+async function twitchStatus() {
+  const id = process.env.TWITCH_CLIENT_ID;
+  if (!id || !process.env.TWITCH_CLIENT_SECRET) return { status: "unknown", error: "sem credenciais" };
+  const login = process.env.TWITCH_LOGIN || "tiojoaoyt";
+  const call = async (force) => fetch(
+    `https://api.twitch.tv/helix/streams?user_login=${encodeURIComponent(login)}`,
+    { headers: { "Client-Id": id, Authorization: `Bearer ${await getAppToken(force)}` } },
+  );
+
+  let r = await call(false);
+  if (r.status === 401) r = await call(true); // token expirou: pega outro e tenta de novo
+  if (!r.ok) throw new Error(`helix ${r.status}`);
+
+  const s = (await r.json()).data?.[0];
+  if (!s) return { status: "offline" };
+  return {
+    status: "live",
+    viewers: s.viewer_count,
+    title: s.title,
+    game: s.game_name,
+    startedAt: s.started_at,
+    thumb: s.thumbnail_url?.replace("{width}x{height}", "640x360"),
+  };
+}
+
+export default async function handler(req, res) {
+  let twitch;
+  try {
+    twitch = await twitchStatus();
+  } catch (e) {
+    console.error("twitch:", e.message);
+    twitch = { status: "unknown" }; // nunca afirma online/offline se a API falhar
+  }
+  // CDN guarda a resposta por 60 s: a Twitch é consultada no máximo 1x por minuto
+  res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=120");
+  res.status(200).json({ twitch, updatedAt: new Date().toISOString() });
+}

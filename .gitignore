@@ -1,0 +1,7 @@
+# chaves e segredos — nunca enviar para o GitHub
+.env
+.env.local
+.env.*.local
+
+.vercel
+node_modules

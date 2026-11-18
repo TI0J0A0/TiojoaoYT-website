@@ -1,0 +1,10 @@
+# Arquivos de trabalho que não precisam ir para o site publicado
+imagens/
+scripts/
+estrutura_e_briefing.md
+tiojoao_prototipo.html
+preview_conceito.png
+wireframe_*.png
+.claude/
+.env
+.env.local

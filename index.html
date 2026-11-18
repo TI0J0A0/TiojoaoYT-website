@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tiojoao</title>
+<meta name="description" content="Lives, vídeos, comunidade e setup do Tiojoao.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Sofia+Sans+Extra+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   CORES — troque aqui para mudar a identidade inteira
+   ========================================================= */
+:root{
+  /* Paleta inspirada no pôr do sol de Vice City (GTA VI) */
+  --bg:#0a0612;
+  --surface:#140c1f;
+  --surface-2:#1d1230;
+  --line:rgba(255,255,255,.09);
+  --text:#fbf6ff;
+  --muted:#ab9cc2;
+  --accent:#ff5fa2;          /* rosa neon */
+  --accent-2:#ffa45c;        /* laranja do pôr do sol */
+  --accent-3:#2fd4d9;        /* azul-piscina */
+  --purple:#6b2fd1;          /* roxo do céu */
+  --accent-ink:#2a0418;      /* texto sobre o botão de destaque */
+  --sunset:linear-gradient(90deg,#ff5fa2,#ff7e7e 50%,#ffa45c);
+  --glow:rgba(255,95,162,.35);
+  --live:#ff4d6d;
+  --radius:22px;
+  --display:"Sofia Sans Extra Condensed","Arial Narrow",sans-serif;
+  --sans:"Geist",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1240px,100% - 32px);margin-inline:auto}
+.display{font-family:var(--display);font-weight:800;text-transform:uppercase;line-height:.92;letter-spacing:.005em}
+.eyebrow{font-size:13px;font-weight:600;color:var(--muted)}
+section{padding-block:40px}
+
+/* ---------- Botões ---------- */
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:12px;font-weight:600;font-size:14px;border:1px solid var(--line);background:rgba(255,255,255,.03);transition:transform .18s,background .18s,box-shadow .18s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.07)}
+.btn-primary{background:linear-gradient(180deg,#ffd0e4,#ff8cc0);color:var(--accent-ink);border-color:transparent;box-shadow:0 4px 0 #b02a6a,0 10px 30px var(--glow)}
+.btn-primary:hover{background:linear-gradient(180deg,#ffe0ee,#ffa3cd)}
+.btn svg{width:14px;height:14px}
+.btn-sm{height:36px;padding:0 14px;font-size:13px;border-radius:10px}
+.link{font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:4px;color:var(--text)}
+
+/* ---------- Header ---------- */
+header{position:fixed;inset:0 0 auto;z-index:50;transition:background .2s,backdrop-filter .2s}
+header.scrolled{background:rgba(10,6,18,.75);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:900;font-size:24px;letter-spacing:.02em}
+.brand .logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);font-size:20px}
+.brand span.dim{color:var(--muted)}
+.nav-right{display:flex;gap:10px;align-items:center}
+.menu-btn{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);display:grid;place-items:center;cursor:pointer;color:var(--text)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
+.drawer{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .2s}
+.drawer.open{opacity:1;pointer-events:auto}
+.drawer nav{position:absolute;right:0;top:0;bottom:0;width:min(340px,86vw);background:var(--surface);border-left:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:4px;transform:translateX(100%);transition:transform .25s}
+.drawer.open nav{transform:none}
+.drawer nav a{padding:14px 12px;border-radius:12px;font-family:var(--display);font-weight:800;font-size:28px;text-transform:uppercase}
+.drawer nav a:hover{background:var(--surface-2);color:var(--accent)}
+.drawer .close{align-self:flex-end;margin-bottom:12px}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:min(760px,100vh);padding-top:110px;padding-bottom:40px;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-2;background:
+  radial-gradient(45% 55% at 72% 62%,rgba(255,164,92,.45),transparent 70%),
+  radial-gradient(60% 70% at 80% 40%,rgba(255,95,162,.38),transparent 70%),
+  radial-gradient(50% 60% at 0% 0%,rgba(214,60,90,.35),transparent 70%),
+  linear-gradient(180deg,#2a1153 0%,#3d1766 40%,#22103a 70%,var(--bg) 100%)}
+.hero-bg::before{content:"";position:absolute;right:8%;top:24%;width:min(480px,46vw);aspect-ratio:1;border-radius:50%;
+  background:linear-gradient(180deg,#ffd27a,#ff8a5c 45%,#ff4f9a 80%);opacity:.55;filter:blur(1px);
+  -webkit-mask:repeating-linear-gradient(180deg,#000 0 16px,transparent 16px 22px) bottom/100% 50% no-repeat,linear-gradient(#000,#000) top/100% 50% no-repeat;
+          mask:repeating-linear-gradient(180deg,#000 0 16px,transparent 16px 22px) bottom/100% 50% no-repeat,linear-gradient(#000,#000) top/100% 50% no-repeat}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,var(--bg))}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:24px}
+.wanted{display:flex;align-items:center;gap:6px;margin-bottom:14px;font-size:12px;font-weight:600;color:var(--muted)}
+.wanted i{font-style:normal;font-size:16px;color:var(--accent-2)}
+.wanted i.off{opacity:.25}
+.hero h1{font-size:clamp(64px,9vw,128px);margin-bottom:22px}
+.hero h1 .sm{display:block;font-size:.32em;background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.04em;margin-bottom:6px}
+.hero p.lead{max-width:420px;color:#c9d2d9;font-size:17px;margin-bottom:28px}
+.hero .actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-art{position:relative;aspect-ratio:1/1.05;max-height:620px;justify-self:end;width:100%}
+.hero-frame{position:absolute;inset:0 4% 12% 8%;border-radius:32px;overflow:hidden;transform:rotate(2deg);border:4px solid rgba(255,255,255,.85);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 80px rgba(255,95,162,.35)}
+.hero-frame img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.hero-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(42,17,83,.7))}
+.hero-art .placeholder{position:absolute;inset:6% 4% 0;border-radius:32px 32px 0 0;background:
+  radial-gradient(circle at 50% 38%,rgba(255,255,255,.12) 0 16%,transparent 16.5%),
+  radial-gradient(ellipse 34% 40% at 50% 100%,rgba(255,255,255,.1) 0 99%,transparent 100%),
+  linear-gradient(160deg,rgba(255,95,162,.14),rgba(107,47,209,.12));border:1px dashed rgba(255,255,255,.15);display:grid;place-items:end center;padding-bottom:28%;color:var(--muted);font-size:13px;text-align:center}
+.hero-art .badge-name{position:absolute;bottom:4%;left:50%;transform:translateX(-50%) rotate(-4deg);font-family:var(--display);font-weight:900;font-size:clamp(70px,10vw,150px);line-height:.8;text-transform:uppercase;background:linear-gradient(180deg,#ffe3f0 10%,#ff8cc0 55%,#ffa45c);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 0 #5a1f9e) drop-shadow(0 14px 30px rgba(0,0,0,.6));white-space:nowrap}
+
+/* ---------- Status das lives ---------- */
+.lives{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.live-card{display:flex;gap:14px;align-items:flex-start;padding:18px;border-radius:18px;background:var(--surface);border:1px solid var(--line);transition:transform .18s,border-color .18s;position:relative}
+.live-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.2)}
+.live-card.is-live{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset,0 10px 40px rgba(255,95,162,.18)}
+.live-card .ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex:none;font-weight:800}
+.ico.kick{background:#53fc18;color:#000}
+.ico.twitch{background:#9146ff;color:#fff}
+.ico.youtube{background:#2a1515;color:#ff4e45}
+.live-card h3{font-size:17px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chip{font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.08);color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.chip.on{background:rgba(255,77,109,.15);color:#ff8fa3}
+.chip.on .dot{background:var(--live);animation:pulse 1.6s infinite}
+.live-card p{font-size:13px;color:var(--muted);margin-top:4px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+.live-card p.game{margin-top:2px;color:#d9cdea}
+.nav-right .btn-primary.is-on .dot{background:var(--live);animation:pulse 1.6s infinite}
+.live-card .arrow{position:absolute;right:16px;top:18px;color:var(--muted)}
+.lives-foot{margin-top:18px}
+@keyframes pulse{50%{opacity:.35}}
+
+/* ---------- Bloco de evento / próxima live ---------- */
+.feature{border-radius:28px;padding:clamp(28px,5vw,56px);background:
+  radial-gradient(60% 80% at 100% 100%,rgba(255,164,92,.28),transparent 70%),
+  radial-gradient(60% 80% at 70% 100%,rgba(255,95,162,.25),transparent 70%),
+  radial-gradient(50% 60% at 0% 0%,rgba(107,47,209,.35),transparent 70%),
+  var(--surface);border:1px solid var(--line);display:grid;grid-template-columns:1fr 1.05fr;gap:40px;align-items:center;overflow:hidden}
+.feature h2{font-size:clamp(52px,7vw,96px);margin-bottom:20px}
+.feature p{color:#c9d2d9;max-width:420px}
+.countdown{display:flex;gap:10px;margin:24px 0 10px}
+.countdown div{background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:14px;padding:12px 10px;min-width:72px;text-align:center}
+.countdown b{display:block;font-family:var(--display);font-size:44px;line-height:1;background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent}
+.countdown span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.small{font-size:12px;color:var(--muted)}
+.ticks{list-style:none;display:grid;gap:12px;margin:24px 0 28px}
+.ticks li{display:flex;gap:12px;font-size:14px;color:#c9d2d9}
+.ticks li::before{content:"";width:8px;height:8px;margin-top:7px;border-radius:50%;background:var(--accent);flex:none;box-shadow:0 0 12px var(--glow)}
+.thumbs{position:relative;min-height:380px}
+.thumb{position:absolute;width:72%;aspect-ratio:16/10;border-radius:18px;overflow:hidden;border:4px solid rgba(255,255,255,.9);box-shadow:0 20px 50px rgba(0,0,0,.5);transition:transform .25s}
+.thumb:hover{transform:rotate(0) scale(1.03)!important;z-index:3}
+.thumb:nth-child(1){top:0;left:0;transform:rotate(-3deg)}
+.thumb:nth-child(2){bottom:0;right:0;transform:rotate(3deg)}
+.thumb .art{position:absolute;inset:0}
+.play{position:absolute;left:14px;bottom:14px;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.9);display:grid;place-items:center;color:#000}
+.thumb-cap{position:absolute;left:0;right:0;bottom:-46px;font-size:13px}
+
+/* ---------- Grid de cards (voz/comunidade/filmes/app) ---------- */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{position:relative;min-height:340px;border-radius:24px;overflow:hidden;border:1px solid var(--line);padding:28px;display:flex;flex-direction:column;justify-content:flex-end;isolation:isolate;transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.card .art{position:absolute;inset:0;z-index:-2;transition:transform .5s}
+.card:hover .art{transform:scale(1.04)}
+.card::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 25%,rgba(10,6,18,.92))}
+.card .eyebrow{color:#dfe6ea;margin-bottom:6px}
+.card h3{font-size:clamp(36px,4vw,52px);margin-bottom:14px}
+.card p{color:#c9d2d9;font-size:14px;max-width:380px;margin-bottom:14px}
+.card .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.tag-time{position:absolute;top:18px;right:18px;font-size:12px;font-weight:600;background:rgba(0,0,0,.6);padding:4px 8px;border-radius:8px}
+.score{display:flex;gap:28px;margin-bottom:16px}
+.score b{font-family:var(--display);font-size:38px;line-height:1;color:var(--accent)}
+.score b.w{color:var(--text)}
+.score span{display:block;font-size:11px;color:var(--muted)}
+
+/* ---------- Carrossel / grid social ---------- */
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(52px,6vw,80px)}
+.sec-head p{color:var(--muted)}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px)/3);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.rail::-webkit-scrollbar{display:none}
+.vid{scroll-snap-align:start}
+.vid .frame{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid var(--line);margin-bottom:12px}
+.vid .frame{background:#000}
+.vid .frame .art,.vid .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.vid .frame .art.blur{filter:blur(18px) brightness(.6);transform:scale(1.2)}
+.vid .frame img.contain{object-fit:contain;object-position:center;transform:scale(1.34)}
+.vid:hover .frame img{transform:scale(1.05)}
+.vid:hover .frame img.contain{transform:scale(1.4)}
+.kind{position:absolute;top:10px;right:10px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:8px;background:var(--accent);color:var(--accent-ink)}
+.vid h4{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.thumb img.art{width:100%;height:100%;object-fit:cover}
+.thumb-title{position:absolute;left:68px;right:14px;bottom:18px;font-size:13px;font-weight:600;text-shadow:0 1px 8px #000;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.vid h4{font-size:15px;font-weight:600;line-height:1.35}
+.vid small{color:var(--muted);font-size:12px}
+.tabs{display:inline-flex;gap:4px;padding:4px;margin-bottom:20px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.tabs button{height:40px;padding:0 18px;border:0;border-radius:10px;background:transparent;color:var(--muted);font:600 14px var(--sans);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .18s,color .18s}
+.tabs button:hover{color:var(--text)}
+.tabs button[aria-selected="true"]{background:linear-gradient(180deg,#ffd0e4,#ff8cc0);color:var(--accent-ink)}
+.tabs .count{font-size:11px;padding:1px 7px;border-radius:99px;background:rgba(255,255,255,.1)}
+.tabs button[aria-selected="true"] .count{background:rgba(42,4,24,.15)}
+.tabs .count:empty{display:none}
+.rail[hidden]{display:none}
+.rail.shorts{grid-auto-columns:calc((100% - 64px)/5)}
+.rail.shorts .frame{aspect-ratio:9/16}
+.rail.shorts .frame img{object-fit:cover;transform:none}
+.rail.shorts .vid:hover .frame img{transform:scale(1.05)}
+.empty{grid-column:1/-1;padding:40px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px}
+.discord-live{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.avatars{display:flex}
+.avatars img{width:30px;height:30px;border-radius:50%;border:2px solid var(--surface);margin-left:-8px;background:var(--surface-2);object-fit:cover}
+.avatars img:first-child{margin-left:0}
+.discord-live b{font-size:14px;display:flex;align-items:center;gap:6px}
+.discord-live b .dot{color:#3ba55d;box-shadow:0 0 8px #3ba55d}
+.online-pill{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:rgba(59,165,93,.18);color:#7ee2a0;display:inline-flex;align-items:center;gap:5px}
+.online-pill::before{content:"";width:6px;height:6px;border-radius:50%;background:#3ba55d}
+.rail-ctrl{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.rail-ctrl button{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;font-size:18px}
+.rail-ctrl button:hover{background:var(--surface-2)}
+.insta{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.insta a{position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.insta .art{position:absolute;inset:0;transition:transform .4s}
+.insta a:hover .art{transform:scale(1.05)}
+.insta span{position:absolute;left:12px;right:12px;bottom:12px;font-size:12px;font-weight:500;text-shadow:0 1px 6px #000}
+
+/* ---------- CTA final ---------- */
+.cta{position:relative;border-radius:28px;overflow:hidden;padding:clamp(28px,5vw,64px);border:1px solid var(--line);background:
+  radial-gradient(50% 90% at 95% 70%,rgba(255,164,92,.3),transparent 70%),radial-gradient(60% 90% at 80% 30%,rgba(255,95,162,.25),transparent 70%),linear-gradient(120deg,var(--surface),#2a1153)}
+.cta .eyebrow{color:var(--accent);margin-bottom:10px}
+.cta>*{position:relative;z-index:1}
+.cta .cta-char{position:absolute;z-index:0;right:3%;bottom:0;height:115%;width:auto;max-width:none;filter:drop-shadow(0 20px 40px rgba(0,0,0,.5))}
+.cta h2{font-size:clamp(48px,6.5vw,92px);max-width:640px;margin-bottom:20px}
+.cta p{max-width:460px;color:#c9d2d9;margin-bottom:26px}
+
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--line);margin-top:60px;padding:48px 0 36px}
+.foot-top{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:32px}
+.foot-top h2{font-size:clamp(36px,5vw,60px)}
+.foot-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-bottom:32px;border-bottom:1px solid var(--line)}
+.foot-cols h5{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px}
+.foot-cols a{display:block;font-size:14px;padding:4px 0;color:#c9d2d9}
+.foot-cols a:hover{color:var(--accent)}
+.foot-bottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:20px;font-size:12px;color:var(--muted)}
+
+/* ---------- Artes de placeholder (troque por imagens reais) ---------- */
+.a1{background:linear-gradient(160deg,#2a1153,#6b2fd1 55%,#ff5fa2)}
+.a2{background:linear-gradient(160deg,#3d1766,#d4527e 60%,#ffa45c)}
+.a3{background:linear-gradient(160deg,#0d3a5c,#1b6f8f 50%,#2fd4d9)}
+.a4{background:linear-gradient(160deg,#22103a,#8a2b8f 55%,#ff5fa2)}
+.a5{background:linear-gradient(160deg,#4a1a5e,#ff7e7e 55%,#ffd27a)}
+.a6{background:linear-gradient(160deg,#140c1f,#3d1766 55%,#2fd4d9)}
+.art{background-size:cover;background-position:center}
+.art.pattern::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.035) 0 2px,transparent 2px 14px)}
+
+/* ---------- Responsivo ---------- */
+@media (max-width:980px){
+  .hero-grid,.feature{grid-template-columns:1fr}
+  .hero-art{max-height:460px;order:-1;margin-top:-20px}
+  .thumbs{min-height:320px;margin-bottom:40px}
+  .rail{grid-auto-columns:calc((100% - 16px)/2)}
+  .rail.shorts{grid-auto-columns:calc((100% - 32px)/3)}
+  .insta{grid-template-columns:repeat(2,1fr)}
+  .foot-cols{grid-template-columns:repeat(2,1fr)}
+  .cta .cta-char{opacity:.25;right:-10%}
+}
+@media (max-width:720px){
+  .lives,.cards{grid-template-columns:1fr}
+  .rail{grid-auto-columns:85%}
+  .rail.shorts{grid-auto-columns:46%}
+  .nav-right .btn{display:none}
+  .countdown div{min-width:0;flex:1}
+  .card{min-height:300px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header id="top">
+  <div class="wrap nav">
+    <a href="#" class="brand" aria-label="Tiojoao — início"><span class="logo">TJ</span><span>TIOJOAO<span class="dim">.TV</span></span></a>
+    <div class="nav-right">
+      <a href="#lives" class="btn btn-primary btn-sm"><span class="dot"></span> Ver lives</a>
+      <button class="menu-btn" id="openMenu" aria-label="Abrir menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <nav aria-label="Menu principal">
+    <button class="menu-btn close" id="closeMenu" aria-label="Fechar menu">✕</button>
+    <a href="#lives">Lives</a>
+    <a href="#evento">Próxima live</a>
+    <a href="#comunidade">Comunidade</a>
+    <a href="#youtube">Vídeos</a>
+    <a href="#instagram">Instagram</a>
+    <a href="#setup">Setup</a>
+    <a href="#contato">Parcerias</a>
+  </nav>
+</div>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="wanted" aria-hidden="true"><i>★</i><i>★</i><i>★</i><i class="off">★</i><i class="off">★</i>&nbsp; Procurado</div>
+      <h1 class="display"><span class="sm">Tiojoao.tv</span>Fique por<br>dentro<br>de tudo</h1>
+      <p class="lead">Lives na Kick, Twitch e YouTube, vídeos, jogos zerados e a comunidade no Discord — tudo num lugar só.</p>
+      <div class="actions">
+        <a href="#lives" class="btn btn-primary">Ver lives</a>
+        <a href="https://discord.com/invite/d88egTm7" target="_blank" rel="noopener" class="btn">Entrar no Discord <span class="online-pill" data-discord-online hidden></span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-frame"><img src="assets/hero-vicecity.webp" alt="Avatar do Tiojoao em Vice City, sentado no capô de um carro" width="1097" height="1200" fetchpriority="high"></div>
+      <div class="badge-name" aria-hidden="true">Tiojoao</div>
+    </div>
+  </div>
+
+  <!-- ===== STATUS DAS LIVES ===== -->
+  <div class="wrap" id="lives">
+    <h2 class="sr-only" style="position:absolute;left:-9999px">Onde o Tiojoao está ao vivo</h2>
+    <div class="lives" id="livesGrid"></div>
+    <div class="lives-foot"><a href="#lives" class="link">Abrir a central de lives</a></div>
+  </div>
+</section>
+
+<!-- ================= PRÓXIMA LIVE / EVENTO ================= -->
+<section id="evento">
+  <div class="wrap">
+    <div class="feature">
+      <div>
+        <h2 class="display" id="eventTitle">Live especial com o Tio</h2>
+        <p id="eventText">A próxima live especial já tem data. Enquanto não começa, ative o aviso e reveja os melhores momentos.</p>
+        <div class="countdown" id="countdown" aria-live="polite">
+          <div><b id="cd-d">00</b><span>dias</span></div>
+          <div><b id="cd-h">00</b><span>horas</span></div>
+          <div><b id="cd-m">00</b><span>min</span></div>
+          <div><b id="cd-s">00</b><span>seg</span></div>
+        </div>
+        <p class="small" id="eventWhen"></p>
+        <ul class="ticks">
+          <li>No Discord, a comunidade fica por dentro de tudo em tempo real.</li>
+          <li>Ative o sininho na Twitch e no YouTube para receber o aviso.</li>
+          <li>As lives podem rolar na Kick, Twitch ou YouTube.</li>
+        </ul>
+        <div class="actions" style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="#lives" class="btn btn-primary">Ver lives</a>
+          <a href="https://discord.com/invite/d88egTm7" target="_blank" rel="noopener" class="btn">Entrar no Discord <span class="online-pill" data-discord-online hidden></span> ↗</a>
+        </div>
+      </div>
+      <div class="thumbs">
+        <a class="thumb" href="#" aria-label="Assistir destaque 1"><div class="art a3 pattern"></div><span class="play">▶</span></a>
+        <a class="thumb" href="#" aria-label="Assistir destaque 2"><div class="art a5 pattern"></div><span class="play">▶</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CARDS ================= -->
+<section id="comunidade">
+  <div class="wrap cards">
+    <a class="card" href="https://streamelements.com/tiojoaoyt/tip" target="_blank" rel="noopener">
+      <div class="art a2 pattern"></div>
+      <div class="eyebrow">Mensagens na live</div>
+      <h3 class="display">Mande seu<br>recado na live</h3>
+      <div class="row"><span class="btn btn-primary btn-sm">Enviar mensagem ↗</span></div>
+    </a>
+    <a class="card" href="https://discord.com/invite/d88egTm7" target="_blank" rel="noopener">
+      <div class="art a4 pattern"></div>
+      <div class="eyebrow">Comunidade</div>
+      <h3 class="display">Apoie e participe</h3>
+      <div class="discord-live" id="discordLive" hidden></div>
+      <p>Entre no Discord, vote nas enquetes e ajude a escolher o próximo jogo.</p>
+      <div class="row"><span class="btn btn-primary btn-sm">Ver comunidade</span></div>
+    </a>
+    <div class="card" id="setup">
+      <div class="art a6 pattern"></div>
+      <span class="tag-time">Zerado</span>
+      <div class="eyebrow">Último jogo finalizado</div>
+      <h3 class="display" id="gameTitle">Nome do jogo</h3>
+      <div class="score">
+        <div><b id="gameScore">—</b><span>Nota do Tio</span></div>
+        <div><b class="w" id="gameHours">—</b><span>Horas de live</span></div>
+      </div>
+      <div class="row"><a href="#" class="btn btn-primary btn-sm">Ver biblioteca</a><a href="#youtube" class="link">Ver os VODs</a></div>
+    </div>
+    <div class="card">
+      <div class="art a1 pattern"></div>
+      <div class="eyebrow">Por trás das câmeras</div>
+      <h3 class="display">Meu setup</h3>
+      <p>PC, câmera, microfone, iluminação e tudo que uso nas lives — com comentários sinceros.</p>
+      <div class="row"><a href="#" class="btn btn-primary btn-sm">Ver setup</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= YOUTUBE ================= -->
+<section id="youtube">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2 class="display">No YouTube</h2><p>Vídeos completos e Shorts recentes do canal.</p></div>
+      <a href="https://www.youtube.com/channel/UCpT-H-0kRTNbY6bQjK_hjJQ" target="_blank" rel="noopener" class="btn">Ver todos os vídeos</a>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Tipo de conteúdo">
+      <button role="tab" id="tab-videos" aria-controls="rail" aria-selected="true">Vídeos <span class="count" id="countVideos"></span></button>
+      <button role="tab" id="tab-shorts" aria-controls="railShorts" aria-selected="false" tabindex="-1">Shorts <span class="count" id="countShorts"></span></button>
+    </div>
+    <div class="rail" id="rail" role="tabpanel" aria-labelledby="tab-videos"></div>
+    <div class="rail shorts" id="railShorts" role="tabpanel" aria-labelledby="tab-shorts" hidden></div>
+    <div class="rail-ctrl">
+      <button id="prev" aria-label="Anterior">‹</button>
+      <button id="next" aria-label="Próximo">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INSTAGRAM ================= -->
+<section id="instagram">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2 class="display">No Instagram</h2><p>Posts e novidades direto do feed.</p></div>
+      <a href="https://www.instagram.com/tiojoaoyt" target="_blank" rel="noopener" class="btn">Ver todos os posts</a>
+    </div>
+    <div class="insta" id="insta"></div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section id="contato">
+  <div class="wrap">
+    <div class="cta">
+      <div class="eyebrow">Faça parte</div>
+      <img class="cta-char" src="assets/personagem.webp" alt="" width="732" height="865" loading="lazy">
+      <h2 class="display">Não perca nenhuma live, novidade ou conteúdo.</h2>
+      <p>As transmissões podem rolar na Kick, Twitch ou YouTube. Acompanhe os status acima e entre na comunidade no Discord pra ficar por dentro de tudo em tempo real.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="#lives" class="btn btn-primary">Ver lives</a>
+        <a href="https://discord.com/invite/d88egTm7" target="_blank" rel="noopener" class="btn">Entrar no Discord <span class="online-pill" data-discord-online hidden></span> ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top"><span class="brand"><span class="logo">TJ</span></span><h2 class="display">Fique por dentro de tudo</h2></div>
+    <div class="foot-cols">
+      <div><h5>Lives</h5><a href="#" data-link="kick">Kick</a><a href="#" data-link="twitch">Twitch</a><a href="#" data-link="youtube">YouTube</a></div>
+      <div><h5>Conteúdo</h5><a href="#youtube">Vídeos</a><a href="https://www.instagram.com/tiojoaoyt">Instagram</a><a href="#setup">Setup</a></div>
+      <div><h5>Comunidade</h5><a href="https://discord.com/invite/d88egTm7">Discord</a><a href="https://streamelements.com/tiojoaoyt/tip">Mensagens na live</a><a href="https://twitter.com/joaoguiar_5">X / Twitter</a></div>
+      <div><h5>Contato</h5><a href="mailto:contato@seudominio.com">Parcerias</a><a href="#">Mídia kit</a></div>
+    </div>
+    <div class="foot-bottom"><span>© <span id="year"></span> Tiojoao. Todos os direitos reservados.</span><a href="#top">Voltar ao topo ↑</a></div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   CONFIGURAÇÃO — edite aqui seus links, status e conteúdos.
+   Status: "live" | "offline" | "unknown"
+   (Quando tiver integração com as APIs, basta preencher este objeto via fetch.)
+   ========================================================= */
+const CONFIG = {
+  lives: [
+    { id:"kick",    name:"Kick",    url:"https://kick.com/tiojoao",       status:"unknown", viewers:null, title:"Me siga na Kick" },
+    { id:"twitch",  name:"Twitch",  url:"https://www.twitch.tv/tiojoaoyt",      status:"unknown", viewers:null, title:"Me siga na Twitch" },
+    { id:"youtube", name:"YouTube", url:"https://www.youtube.com/channel/UCpT-H-0kRTNbY6bQjK_hjJQ",   status:"unknown", viewers:null, title:"Me siga no YouTube" },
+  ],
+  evento: {
+    titulo: "Live especial com o Tio",
+    data:   "2026-11-28T20:00:00-03:00",   // horário de Brasília
+  },
+  ultimoJogo: { titulo:"Nome do jogo", nota:null, horas:null },
+  videos: [
+    { titulo:"Título do vídeo 1", canal:"Tiojoao", url:"#", art:"a3" },
+    { titulo:"Título do vídeo 2", canal:"Tiojoao", url:"#", art:"a5" },
+    { titulo:"Título do vídeo 3", canal:"Tiojoao", url:"#", art:"a2" },
+    { titulo:"Corte da live #1",  canal:"Cortes",  url:"#", art:"a4" },
+    { titulo:"Corte da live #2",  canal:"Cortes",  url:"#", art:"a1" },
+    { titulo:"Corte da live #3",  canal:"Cortes",  url:"#", art:"a6" },
+  ],
+  instagram: [
+    { legenda:"Legenda do post 1", url:"#", art:"a5" },
+    { legenda:"Legenda do post 2", url:"#", art:"a3" },
+    { legenda:"Legenda do post 3", url:"#", art:"a4" },
+    { legenda:"Legenda do post 4", url:"#", art:"a2" },
+  ],
+};
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ICONS = { kick:"K", twitch:"▣", youtube:"▶" };
+
+/* Status das lives */
+function renderLives(){
+$("#livesGrid").innerHTML = CONFIG.lives.map(l => {
+  const chip = l.status==="live" ? '<span class="chip on"><span class="dot"></span>Ao vivo</span>'
+             : l.status==="offline" ? '<span class="chip">Offline</span>'
+             : '<span class="chip">Status indisponível</span>';
+  const sub = l.status==="live"
+    ? `${l.viewers!=null ? '👁 '+Number(l.viewers).toLocaleString('pt-BR')+' assistindo · ' : ''}${esc(l.title)}`
+    : esc(l.title);
+  const sub2 = l.status==="live" && l.game ? `<p class="game">🎮 ${esc(l.game)}</p>` : "";
+  return `<a class="live-card ${l.status==='live'?'is-live':''}" href="${esc(l.url)}" target="_blank" rel="noopener">
+    <span class="ico ${l.id}">${ICONS[l.id]}</span>
+    <div><h3>${esc(l.name)} ${chip}</h3><p>${sub}</p>${sub2}</div>
+    <span class="arrow">↗</span></a>`;
+}).join("");
+  // botão do topo vira "Ao vivo" quando alguma plataforma estiver no ar
+  const live = CONFIG.lives.find(l => l.status==="live");
+  const top = $(".nav-right .btn-primary");
+  top.classList.toggle("is-on", !!live);
+  top.innerHTML = live ? '<span class="dot"></span> Ao vivo agora' : '<span class="dot"></span> Ver lives';
+  if (live) top.href = live.url;
+}
+renderLives();
+
+/* Status real vindo do servidor (/api/live). Sem servidor, fica "Status indisponível". */
+function loadLive(){
+  fetch("/api/live").then(r => r.ok ? r.json() : Promise.reject()).then(d => {
+    for (const [id, info] of Object.entries(d)) {
+      const l = CONFIG.lives.find(x => x.id===id);
+      if (!l || !info || !info.status) continue;
+      l.status = info.status;
+      l.viewers = info.viewers ?? null;
+      l.game = info.game || null;
+      l.title = info.status==="live" && info.title ? info.title : l.defaultTitle;
+    }
+    renderLives();
+  }).catch(() => {});
+}
+CONFIG.lives.forEach(l => l.defaultTitle = l.title);
+loadLive(); setInterval(loadLive, 60000);
+document.querySelectorAll("[data-link]").forEach(a => {
+  const l = CONFIG.lives.find(x => x.id===a.dataset.link); if (l) a.href = l.url;
+});
+
+/* Contagem regressiva */
+const target = new Date(CONFIG.evento.data);
+$("#eventTitle").textContent = CONFIG.evento.titulo;
+$("#eventWhen").textContent = "Contagem para a live, " + target.toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit",timeZone:"America/Sao_Paulo"}) + " (Brasília)";
+const pad = n => String(n).padStart(2,"0");
+function tick(){
+  let d = Math.max(0, target - Date.now())/1000;
+  $("#cd-d").textContent = pad(Math.floor(d/86400));
+  $("#cd-h").textContent = pad(Math.floor(d%86400/3600));
+  $("#cd-m").textContent = pad(Math.floor(d%3600/60));
+  $("#cd-s").textContent = pad(Math.floor(d%60));
+}
+tick(); setInterval(tick,1000);
+
+/* Último jogo */
+const g = CONFIG.ultimoJogo;
+$("#gameTitle").textContent = g.titulo;
+$("#gameScore").textContent = g.nota!=null ? String(g.nota).replace(".",",") : "—";
+$("#gameHours").textContent = g.horas!=null ? g.horas+"h" : "—";
+
+/* YouTube — lê data/videos.json (gerado por scripts/update_videos.py); se falhar, usa CONFIG.videos */
+const fmtViews = n => n==null ? "" : " · " + (n>=1000 ? (n/1000).toLocaleString("pt-BR",{maximumFractionDigits:1})+" mil" : n) + (n===1?" visualização":" visualizações");
+const fmtDate = iso => { if(!iso) return ""; const d=(Date.now()-new Date(iso))/86400000;
+  return d<1 ? "hoje" : d<2 ? "ontem" : d<30 ? `há ${Math.floor(d)} dias` : new Date(iso).toLocaleDateString("pt-BR"); };
+function frame(v){
+  if (!v.thumb) return `<div class="art ${v.art||'a1'} pattern"></div>`;
+  return `<div class="art blur" style="background-image:url('${esc(v.thumb)}')"></div>
+    <img src="${esc(v.thumb)}" alt="" loading="lazy" class="${v.short?'contain':''}">`;
+}
+const card = v => `<a class="vid" href="${esc(v.url)}" target="_blank" rel="noopener">
+    <div class="frame">${v.short && v.thumb ? `<img src="${esc(v.thumb)}" alt="" loading="lazy">` : frame(v)}<span class="play">▶</span></div>
+    <h4>${esc(v.titulo.replace(/\s*#shorts?\b/ig,""))}</h4><small>${v.short?'':esc(v.canal)+' · '}${v.publicado?fmtDate(v.publicado):''}${fmtViews(v.views)}</small></a>`;
+function renderVideos(list){
+  const vids = list.filter(v => !v.short), shorts = list.filter(v => v.short);
+  $("#rail").innerHTML = vids.length ? vids.map(card).join("") : '<p class="empty">Nenhum vídeo recente.</p>';
+  $("#railShorts").innerHTML = shorts.length ? shorts.map(card).join("") : '<p class="empty">Nenhum short recente.</p>';
+  $("#countVideos").textContent = vids.length || "";
+  $("#countShorts").textContent = shorts.length || "";
+  // Destaques do bloco "Próxima live": os 2 vídeos longos mais recentes
+  const longos = list.filter(v => !v.short && v.thumb).slice(0,2);
+  document.querySelectorAll("#evento .thumb").forEach((a,i) => {
+    const v = longos[i]; if (!v) return;
+    a.href = v.url; a.target="_blank"; a.rel="noopener"; a.setAttribute("aria-label","Assistir: "+v.titulo);
+    a.querySelector(".art").outerHTML = `<img class="art" src="${esc(v.thumb)}" alt="" loading="lazy">`;
+  });
+}
+// 1º tenta o servidor (/api/videos, sempre atualizado); depois o arquivo data/videos.json; por último CONFIG.videos
+const getVideos = url => fetch(url,{cache:"no-cache"}).then(r => r.ok ? r.json() : Promise.reject())
+  .then(d => d.videos && d.videos.length ? d.videos : Promise.reject());
+getVideos("/api/videos").catch(() => getVideos("data/videos.json"))
+  .then(renderVideos).catch(() => renderVideos(CONFIG.videos));
+/* Abas Vídeos / Shorts */
+const tabs = [$("#tab-videos"), $("#tab-shorts")];
+const activeRail = () => document.querySelector("#youtube .rail:not([hidden])");
+function selectTab(t){
+  tabs.forEach(b => { const on = b===t; b.setAttribute("aria-selected",on); b.tabIndex = on?0:-1;
+    document.getElementById(b.getAttribute("aria-controls")).hidden = !on; });
+  try { localStorage.setItem("ytTab", t.id); } catch(e){}
+}
+tabs.forEach((b,i) => {
+  b.onclick = () => selectTab(b);
+  b.onkeydown = e => { if (e.key==="ArrowRight"||e.key==="ArrowLeft"){ const n=tabs[(i+1)%2]; selectTab(n); n.focus(); } };
+});
+try { const saved = localStorage.getItem("ytTab"); if (saved) selectTab(document.getElementById(saved) || tabs[0]); } catch(e){}
+$("#prev").onclick = () => { const r=activeRail(); r.scrollBy({left:-r.clientWidth,behavior:"smooth"}); };
+$("#next").onclick = () => { const r=activeRail(); r.scrollBy({left: r.clientWidth,behavior:"smooth"}); };
+
+/* Instagram */
+$("#insta").innerHTML = CONFIG.instagram.map(p => `<a href="${esc(p.url)}" target="_blank" rel="noopener">
+  <div class="art ${p.art} pattern"></div><span>${esc(p.legenda)}</span></a>`).join("");
+
+/* Discord — widget público do servidor (atualiza a cada 2 min) */
+const DISCORD_WIDGET = "https://discord.com/api/guilds/1023643110934327396/widget.json";
+function loadDiscord(){
+  fetch(DISCORD_WIDGET).then(r => r.ok ? r.json() : Promise.reject()).then(d => {
+    const n = d.presence_count ?? (d.members||[]).length;
+    // usa sempre o convite atual do widget em todos os links do Discord
+    if (d.instant_invite) document.querySelectorAll('a[href*="discord.com/invite"]').forEach(a => a.href = d.instant_invite);
+    if (!n) return;
+    const label = n.toLocaleString("pt-BR") + " online";
+    document.querySelectorAll("[data-discord-online]").forEach(el => { el.textContent = label; el.hidden = false; });
+    const box = $("#discordLive");
+    const faces = (d.members||[]).filter(m => m.avatar_url).slice(0,6)
+      .map(m => `<img src="${esc(m.avatar_url)}" alt="" loading="lazy" referrerpolicy="no-referrer">`).join("");
+    box.innerHTML = `<div class="avatars" aria-hidden="true">${faces}</div><b><span class="dot"></span>${label} agora no Discord</b>`;
+    box.hidden = false;
+  }).catch(() => {}); // se falhar, o site segue sem o contador
+}
+loadDiscord(); setInterval(loadDiscord, 120000);
+
+/* Header + menu */
+addEventListener("scroll", () => $("header").classList.toggle("scrolled", scrollY>20), {passive:true});
+const drawer = $("#drawer");
+const setMenu = open => { drawer.classList.toggle("open",open); drawer.setAttribute("aria-hidden",!open); };
+$("#openMenu").onclick = () => setMenu(true);
+$("#closeMenu").onclick = () => setMenu(false);
+drawer.onclick = e => { if (e.target===drawer || e.target.tagName==="A") setMenu(false); };
+addEventListener("keydown", e => { if (e.key==="Escape") setMenu(false); });
+$("#year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
