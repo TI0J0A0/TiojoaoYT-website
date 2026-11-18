@@ -2,6 +2,19 @@
   "_ajuda": "Edite aqui suas reviews. nota: número de 0 a 10 (ex.: 8.5) ou null para 'a definir'. review: lista de parágrafos ([] = 'review em breve'). status opcional: zerado | jogando | dropado | null.",
   "games": [
     {
+      "titulo": "Phantom Blade Zero",
+      "status": null,
+      "nota": 9,
+      "playlist": "https://www.youtube.com/playlist?list=PLMrexlYR6FlY",
+      "capa": "https://i.ytimg.com/vi/Hecyi5_JfUM/hqdefault.jpg",
+      "episodios": null,
+      "inicio": null,
+      "fim": "2026-11-18",
+      "review": [
+        "Jogo maravilhoso! Lutas e mecânicas insanas, armas incríveis e animações fluidas e muito bem trabalhadas."
+      ]
+    },
+    {
       "titulo": "Onimusha: Way of the Sword",
       "status": null,
       "nota": 8,
