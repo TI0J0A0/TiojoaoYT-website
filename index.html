@@ -310,6 +310,9 @@ header.scrolled{background:rgba(10,6,18,.78);backdrop-filter:blur(16px);-webkit-
 .s3-attrs{display:grid;gap:10px;margin-bottom:16px}
 .s3-attrs div{display:grid;gap:4px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#d9cdea}
 .s3-attrs i{display:block;height:8px;border-radius:4px;background:linear-gradient(90deg,#ff5fa2,#ffa45c) 0 0/var(--v) 100% no-repeat,rgba(255,255,255,.1)}
+.s3-soft{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;font-size:13px;color:var(--muted)}
+.s3-soft b{padding:6px 12px;border-radius:99px;background:var(--surface);border:1px solid var(--line);color:#e6dcf3;font-weight:600}
+.s3-soft:empty{display:none}
 .s3-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
 @media (max-width:720px){
   .s3-stage{height:auto;min-height:0;aspect-ratio:3/4;max-height:78vh}
@@ -678,6 +681,7 @@ section,#lives{scroll-margin-top:84px}
         <div class="s3-loading"><span class="spin"></span> Montando o setup…</div>
         <aside class="s3-panel" hidden aria-live="polite"></aside>
       </div>
+      <div class="s3-soft"></div>
     </div>
   </div>
 </section>
