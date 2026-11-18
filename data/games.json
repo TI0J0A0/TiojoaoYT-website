@@ -1,0 +1,126 @@
+{
+  "_ajuda": "Edite aqui suas notas. status: zerado | jogando | dropado | jogado (ou null). nota: número de 0 a 10 (ex.: 8.5) ou null. comentario: frase curta.",
+  "games": [
+    {
+      "titulo": "Phantom Blade Zero",
+      "status": "jogando",
+      "nota": null,
+      "comentario": "",
+      "playlist": "https://www.twitch.tv/tiojoaoyt/videos?filter=archives",
+      "capa": "https://i.ytimg.com/vi/Hecyi5_JfUM/hqdefault.jpg",
+      "episodios": null,
+      "inicio": "2026-11-15",
+      "fim": "2026-11-18"
+    },
+    {
+      "titulo": "Onimusha: Way of the Sword",
+      "status": null,
+      "nota": null,
+      "comentario": "",
+      "playlist": "https://www.youtube.com/playlist?list=PLc5pCWKPu7hk",
+      "capa": "https://i.ytimg.com/vi/Oy6YzeQQqjM/hqdefault.jpg",
+      "episodios": 14,
+      "inicio": "2026-11-03",
+      "fim": "2026-11-17"
+    },
+    {
+      "titulo": "The Last of Us Part II Remastered",
+      "status": null,
+      "nota": null,
+      "comentario": "",
+      "playlist": "https://www.youtube.com/playlist?list=PLD8kpA_r7S6o",
+      "capa": "https://i.ytimg.com/vi/uxDOW7u5fWE/hqdefault.jpg",
+      "episodios": 4,
+      "inicio": "2026-10-08",
+      "fim": "2026-10-12"
+    },
+    {
+      "titulo": "Valorant",
+      "status": null,
+      "nota": null,
+      "comentario": "",
+      "playlist": "https://www.youtube.com/playlist?list=PLWsdJdGc91R4",
+      "capa": "https://i.ytimg.com/vi/lWqpGdMrwtE/hqdefault.jpg",
+      "episodios": 1,
+      "inicio": "2026-10-09",
+      "fim": "2026-10-09"
+    },
+    {
+      "titulo": "The Last of Us",
+      "status": null,
+      "nota": null,
+      "comentario": "",
+      "playlist": "https://www.youtube.com/playlist?list=PLUhg8mBwrjJE",
+      "capa": "https://i.ytimg.com/vi/2-lDg96iKbs/hqdefault.jpg",
+      "episodios": 8,
+      "inicio": "2026-08-26",
+      "fim": "2026-10-07"
+    },
+    {
+      "titulo": "GTA VI",
+      "status": null,
+      "nota": null,
+      "comentario": "",
+      "playlist": "https://www.youtube.com/playlist?list=PLWJF1IJE_rVE",
+      "capa": "https://i.ytimg.com/vi/a5TNdliDwDw/hqdefault.jpg",
+      "episodios": 1,
+      "inicio": "2026-08-28",
+      "fim": "2026-08-28"
+    },
+    {
+      "titulo": "GTA V",
+      "status": null,
+      "nota": null,
+      "comentario": "",
+      "playlist": "https://www.youtube.com/playlist?list=PLezCvON8Kaek",
+      "capa": "https://i.ytimg.com/vi/h8ek29nD22o/hqdefault.jpg",
+      "episodios": 11,
+      "inicio": "2026-07-16",
+      "fim": "2026-08-25"
+    },
+    {
+      "titulo": "Little Nightmares",
+      "status": null,
+      "nota": null,
+      "comentario": "",
+      "playlist": "https://www.youtube.com/playlist?list=PLaX6Ok5L4kwM1cnKpFhSOHv_x39XF8yOr",
+      "capa": "https://i.ytimg.com/vi/WtRwXO6RFMo/hqdefault.jpg",
+      "episodios": 9,
+      "inicio": "2025-10-22",
+      "fim": "2025-11-19"
+    },
+    {
+      "titulo": "Black Myth: Wukong",
+      "status": null,
+      "nota": null,
+      "comentario": "",
+      "playlist": "https://www.youtube.com/playlist?list=PLaX6Ok5L4kwNXqlzydK0WWdR3MiHoS7Pc",
+      "capa": "https://i.ytimg.com/vi/eXVnOIAXAyE/hqdefault.jpg",
+      "episodios": 9,
+      "inicio": "2025-09-11",
+      "fim": "2025-10-19"
+    },
+    {
+      "titulo": "No, I'm Not a Human",
+      "status": null,
+      "nota": null,
+      "comentario": "",
+      "playlist": "https://www.youtube.com/playlist?list=PLaX6Ok5L4kwNHdW-5RPOzFpqeIAzR1J-w",
+      "capa": "https://i.ytimg.com/vi/xcV-k1TUUZo/hqdefault.jpg",
+      "episodios": 1,
+      "inicio": "2025-09-29",
+      "fim": "2025-09-29"
+    },
+    {
+      "titulo": "The Witcher 3: Wild Hunt",
+      "status": null,
+      "nota": null,
+      "comentario": "",
+      "playlist": "https://www.youtube.com/playlist?list=PLaX6Ok5L4kwO-IZIQN0Za3MilXbSIPgs1",
+      "capa": "https://i.ytimg.com/vi/wdvM-JY2uN0/hqdefault.jpg",
+      "episodios": 3,
+      "inicio": "2022-05-10",
+      "fim": "2022-05-26"
+    }
+  ]
+}
