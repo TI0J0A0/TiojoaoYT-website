@@ -345,6 +345,19 @@ header.scrolled{background:rgba(10,6,18,.78);backdrop-filter:blur(16px);-webkit-
 .rv-text p{color:#ddd2ea;font-size:16px;line-height:1.7;margin-bottom:14px}
 .rv-text p:first-child::first-letter{font-family:var(--display);font-size:3.2em;float:left;line-height:.8;margin:6px 8px 0 0;color:var(--accent)}
 .review-modal .btn-primary{margin-top:8px}
+/* Player de vídeo (YouTube na própria página) */
+.video-modal{border:0;padding:0;margin:auto;width:min(1100px,100% - 24px);background:transparent;color:var(--text);overflow:visible}
+.video-modal::backdrop{background:rgba(5,2,10,.85);backdrop-filter:blur(8px)}
+.video-modal[open]{animation:modalIn .35s cubic-bezier(.2,.8,.2,1)}
+.vm-frame{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 40px 120px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.08)}
+.vm-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-modal.short{width:auto}
+.video-modal.short .vm-frame{aspect-ratio:9/16;height:min(82vh,860px);max-width:calc(100vw - 24px);margin:0 auto}
+.vm-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
+.vm-bar h4{font-size:15px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.vm-bar .acts{display:flex;gap:8px;flex:none}
+.video-modal.short .vm-bar{max-width:min(calc(82vh * 9 / 16),calc(100vw - 24px));margin-inline:auto}
+.video-modal.short .vm-bar h4{display:none}
 .insta{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .insta a{position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
 .insta .art{position:absolute;inset:0;transition:transform .4s}
@@ -764,6 +777,16 @@ section,#lives{scroll-margin-top:84px}
     <a class="btn btn-primary" id="rvLink" target="_blank" rel="noopener">▶ Assistir a playlist ↗</a>
   </div>
 </dialog>
+<dialog class="video-modal" id="videoModal" aria-labelledby="vmTitle">
+  <div class="vm-frame" id="vmFrame"></div>
+  <div class="vm-bar">
+    <h4 id="vmTitle"></h4>
+    <div class="acts">
+      <a class="btn btn-sm" id="vmYT" target="_blank" rel="noopener">Abrir no YouTube ↗</a>
+      <button class="btn btn-sm" type="button" id="vmClose" aria-label="Fechar vídeo">✕ Fechar</button>
+    </div>
+  </div>
+</dialog>
 <dialog class="login-modal" id="loginModal" aria-labelledby="loginTitle">
   <button class="s3-x" type="button" id="loginClose" aria-label="Fechar">✕</button>
   <span class="coin big" aria-hidden="true">TJ</span>
@@ -993,7 +1016,7 @@ function frame(v){
   return `<div class="art blur" style="background-image:url('${esc(v.thumb)}')"></div>
     <img src="${esc(v.thumb)}" alt="" loading="lazy" class="${v.short?'contain':''}">`;
 }
-const card = v => `<a class="vid" href="${esc(v.url)}" target="_blank" rel="noopener">
+const card = v => `<a class="vid" href="${esc(v.url)}" target="_blank" rel="noopener" data-yt="${esc(v.id||'')}"${v.short?' data-short':''} data-title="${esc(v.titulo.replace(/\s*#shorts?\b/ig,""))}">
     <div class="frame">${v.short && v.thumb ? `<img src="${esc(v.thumb)}" alt="" loading="lazy">` : frame(v)}<span class="play">▶</span></div>
     <h4>${esc(v.titulo.replace(/\s*#shorts?\b/ig,""))}</h4><small>${v.short?'':esc(v.canal)+' · '}${v.publicado?fmtDate(v.publicado):''}${fmtViews(v.views)}</small></a>`;
 function renderVideos(list){
@@ -1008,6 +1031,7 @@ function renderVideos(list){
   document.querySelectorAll("#evento .thumb").forEach((a,i) => {
     const v = longos[i]; if (!v) return;
     a.href = v.url; a.target="_blank"; a.rel="noopener"; a.setAttribute("aria-label","Assistir: "+v.titulo);
+    a.dataset.yt = v.id || ""; a.dataset.title = v.titulo;
     a.querySelector(".art").outerHTML = `<img class="art" src="${esc(v.thumb)}" alt="" loading="lazy">`;
   });
 }
@@ -1031,6 +1055,31 @@ tabs.forEach((b,i) => {
 try { const saved = localStorage.getItem("ytTab"); if (saved) selectTab(document.getElementById(saved) || tabs[0]); } catch(e){}
 $("#prev").onclick = () => { const r=activeRail(); r.scrollBy({left:-r.clientWidth,behavior:"smooth"}); };
 $("#next").onclick = () => { const r=activeRail(); r.scrollBy({left: r.clientWidth,behavior:"smooth"}); };
+
+/* Player: abre o vídeo do YouTube aqui mesmo (Ctrl/clique do meio continua abrindo em nova aba) */
+const vModal = $("#videoModal");
+const ytId = u => { try { const x = new URL(u); if (x.hostname.includes("youtu.be")) return x.pathname.slice(1);
+  return x.searchParams.get("v") || (x.pathname.match(/\/(?:shorts|embed|live)\/([\w-]{6,})/)||[])[1] || ""; } catch(e){ return ""; } };
+function openVideo(id, { short=false, title="", url="" } = {}){
+  if (!id || !vModal.showModal) return false;
+  vModal.classList.toggle("short", short);
+  $("#vmFrame").innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&modestbranding=1&playsinline=1"
+    title="${esc(title||'Vídeo do YouTube')}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen; web-share"
+    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+  $("#vmTitle").textContent = title;
+  $("#vmYT").href = url || (short ? `https://www.youtube.com/shorts/${id}` : `https://www.youtube.com/watch?v=${id}`);
+  vModal.showModal();
+  return true;
+}
+vModal.addEventListener("close", () => { $("#vmFrame").innerHTML = ""; }); // para o áudio ao fechar
+$("#vmClose").onclick = () => vModal.close();
+vModal.addEventListener("click", e => { if (e.target === vModal) vModal.close(); });
+document.addEventListener("click", e => {
+  const a = e.target.closest("a[data-yt]");
+  if (!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+  const id = a.dataset.yt || ytId(a.href);
+  if (openVideo(id, { short: a.hasAttribute("data-short"), title: a.dataset.title, url: a.href })) e.preventDefault();
+});
 
 /* Instagram */
 $("#insta").innerHTML = CONFIG.instagram.map(p => `<a href="${esc(p.url)}" target="_blank" rel="noopener">
