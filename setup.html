@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setup 3D · Tiojoao</title>
+<meta name="description" content="O setup do Tiojoao em 3D: gire, aproxime e clique nos equipamentos que ele usa nas lives.">
+<link rel="icon" href="/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Mr+Dafoe&family=Sofia+Sans+Extra+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
+<script type="module" src="/js/pages/setup.js"></script>
+</head>
+<body data-page="setup">
+<main id="conteudo">
+
+<section class="phead short">
+  <div class="sky" aria-hidden="true"><i class="sun"></i><i class="palm r"></i></div>
+  <div class="wrap phead-in">
+    <span class="postnum">Nº 05 · tiojoaoyt.com/setup</span><br>
+    <p class="script">Por trás da live,</p>
+    <h1 class="mega">Setup</h1>
+    <p class="lead">Gire, aproxime e clique nos equipamentos para ver o que eu uso nas lives.</p>
+  </div>
+</section>
+
+<section class="setup-sec">
+  <div class="wrap">
+    <div class="s3" id="setup3d">
+      <div class="s3-bar">
+        <div class="tabs s3-chips cut" role="group" aria-label="Categorias do setup"></div>
+        <div class="s3-actions">
+          <button class="btn btn-sm" type="button" id="s3Live" aria-pressed="false"><span class="dot"></span> Modo live</button>
+          <button class="btn btn-sm" type="button" id="s3Reset">⟲ Visão geral</button>
+        </div>
+      </div>
+      <div class="s3-stage cut">
+        <div class="s3-canvas"></div>
+        <div class="s3-pins"></div>
+        <div class="s3-hint">🖱️ Arraste para girar · role para aproximar · clique num item</div>
+        <div class="s3-loading"><span class="spin"></span> Montando o setup…</div>
+        <aside class="s3-panel" hidden aria-live="polite"></aside>
+      </div>
+      <div class="s3-soft"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+</body>
+</html>

@@ -356,7 +356,7 @@ export async function initSetup3D(root) {
   const resetBtn = document.getElementById("s3Reset");
 
   let data = { items: [] };
-  try { data = await fetch("data/setup.json", { cache: "no-cache" }).then((r) => r.json()); } catch (e) { /* segue com nomes padrão */ }
+  try { data = await fetch("/data/setup.json", { cache: "no-cache" }).then((r) => r.json()); } catch (e) { /* segue com nomes padrão */ }
   const info = Object.fromEntries((data.items || []).map((i) => [i.id, i]));
   try { await document.fonts.ready; } catch (e) {}
 

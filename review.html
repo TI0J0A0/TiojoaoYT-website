@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review · Tiojoao</title>
+<meta name="description" content="Review do Tiojoao: opinião sincera, nota e playlist completa.">
+<link rel="icon" href="/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Mr+Dafoe&family=Sofia+Sans+Extra+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<script type="module" src="/js/pages/review.js"></script>
+</head>
+<body data-page="reviews">
+<main id="conteudo">
+
+<section class="rv-hero">
+  <div class="rv-bg" aria-hidden="true"><img id="rvBg" alt=""></div>
+  <div class="wrap rv-grid">
+    <div class="rv-copy">
+      <a class="postnum" href="/reviews">← Todas as reviews</a>
+      <p class="script">Review do Tio</p>
+      <h1 class="mega" id="rvTitle">Carregando…</h1>
+      <p class="rv-meta" id="rvMeta"></p>
+    </div>
+    <div class="rv-card">
+      <figure class="postcard"><span class="tape" style="top:-14px;left:14%;transform:rotate(-8deg)"></span><img id="rvCover" alt=""><figcaption id="rvCap"></figcaption></figure>
+      <div class="rv-stamp" id="rvStamp"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap rv-body">
+    <article class="rv-text" id="rvText"></article>
+    <aside class="rv-side">
+      <div class="rv-player cut" id="rvPlayer" hidden>
+        <button type="button" class="rv-facade" id="rvFacade" aria-label="Assistir aqui"><img id="rvThumb" alt=""><span class="play big">▶</span></button>
+      </div>
+      <div class="rv-actions">
+        <a class="btn btn-primary" id="rvPlaylist" target="_blank" rel="noopener" hidden>▶ Playlist no YouTube ↗</a>
+        <a class="btn" href="/reviews">Ver todas as reviews</a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><div><h2 class="display"><span class="script">Outras</span> reviews</h2></div></div>
+    <div class="games" id="others"></div>
+  </div>
+</section>
+
+</main>
+</body>
+</html>

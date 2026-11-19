@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vídeos · Tiojoao</title>
+<meta name="description" content="Vídeos completos e Shorts do canal do Tiojoao no YouTube.">
+<link rel="icon" href="/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Mr+Dafoe&family=Sofia+Sans+Extra+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<script type="module" src="/js/pages/videos.js"></script>
+</head>
+<body data-page="videos">
+<main id="conteudo">
+
+<section class="phead">
+  <div class="sky" aria-hidden="true"><i class="sun"></i><i class="palm l"></i><i class="palm r2"></i></div>
+  <div class="wrap phead-in">
+    <span class="postnum">Nº 03 · tiojoaoyt.com/videos</span><br>
+    <p class="script">Assista os</p>
+    <h1 class="mega">Vídeos</h1>
+    <p class="lead">Gameplays completas e Shorts do canal. Clique e assista aqui mesmo.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <a class="feat cut" id="feat" href="https://www.youtube.com/channel/UCpT-H-0kRTNbY6bQjK_hjJQ" target="_blank" rel="noopener" hidden>
+      <img id="featImg" alt="">
+      <div class="feat-info">
+        <span class="postnum">Mais recente</span>
+        <h2 class="display" id="featTitle"></h2>
+        <small id="featMeta"></small>
+      </div>
+      <span class="play big">▶</span>
+    </a>
+
+    <div class="v-tools">
+      <div class="tabs cut" role="tablist" aria-label="Tipo de conteúdo">
+        <button role="tab" id="tab-videos" aria-controls="gridVideos" aria-selected="true">Vídeos <span class="count" id="countVideos"></span></button>
+        <button role="tab" id="tab-shorts" aria-controls="gridShorts" aria-selected="false" tabindex="-1">Shorts <span class="count" id="countShorts"></span></button>
+      </div>
+      <a href="https://www.youtube.com/channel/UCpT-H-0kRTNbY6bQjK_hjJQ?sub_confirmation=1" target="_blank" rel="noopener" class="btn btn-sm">Inscrever no YouTube ↗</a>
+    </div>
+    <div class="vgrid" id="gridVideos" role="tabpanel" aria-labelledby="tab-videos"></div>
+    <div class="vgrid shorts" id="gridShorts" role="tabpanel" aria-labelledby="tab-shorts" hidden></div>
+  </div>
+</section>
+
+</main>
+</body>
+</html>

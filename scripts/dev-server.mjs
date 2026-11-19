@@ -40,8 +40,11 @@ http.createServer(async (req, res) => {
   }
 
   // arquivos estáticos (sem expor .env.local nem pastas ocultas)
+  // mesmas rotas da Vercel (vercel.json): /lives → lives.html, /reviews/jogo → review.html
   let rel = decodeURIComponent(url.pathname);
   if (rel.endsWith("/")) rel += "index.html";
+  if (/^\/reviews\/[^/]+$/.test(rel)) rel = "/review.html";
+  else if (!path.extname(rel) && fs.existsSync(path.join(ROOT, rel + ".html"))) rel += ".html";
   const file = path.join(ROOT, rel);
   if (!file.startsWith(ROOT) || rel.split("/").some((p) => p.startsWith(".")) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
     res.writeHead(404).end("not found"); return;
