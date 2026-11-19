@@ -24,6 +24,7 @@ const PAGES = [
   { id:"reviews", href:"/reviews", nome:"Reviews" },
   { id:"setup", href:"/setup", nome:"Setup" },
   { id:"comunidade", href:"/comunidade", nome:"Comunidade" },
+  { id:"loja", href:"/loja", nome:"Loja" },
 ];
 
 /* ---------- utilidades ---------- */
@@ -311,7 +312,7 @@ function renderAcct(u){
       <div class="wallet cut"><span>Seu saldo</span><b><span class="coin" style="width:30px;height:30px;font-size:11px">TJ</span>${fmtPts(u.points)}</b><span>tjcoins</span></div>
       <h6>Contas ligadas</h6>
       <div class="links">${Object.entries(PROV).map(([k,p]) => `<div>${p.ic}<span>${p.nome}${has[k] ? ` · ${esc(has[k])}` : ""}</span>${has[k] ? '<span class="ok">✓</span>' : `<a href="/api/login?p=${k}&link=1">Vincular</a>`}</div>`).join("")}</div>
-      <p class="soon">🛒 A loja para trocar seus tjcoins chega em breve.</p>
+      <a class="btn btn-sm btn-primary" href="/loja">🛒 Abrir a loja</a>
       <button class="btn btn-sm out" type="button" id="logoutBtn">Sair</button>
     </div>`;
   const chip = $("#acctChip"), pop = $("#acctPop");

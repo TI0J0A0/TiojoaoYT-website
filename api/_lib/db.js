@@ -25,4 +25,6 @@ export const db = {
   upsert: (table, rows, onConflict) => call(`${table}${onConflict ? `?on_conflict=${onConflict}` : ""}`, {
     method: "POST", body: JSON.stringify(rows), headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
   }),
+  insert: (table, row) => call(table, { method: "POST", body: JSON.stringify(row), headers: { Prefer: "return=minimal" } }),
+  update: (table, query, patch) => call(`${table}?${query}`, { method: "PATCH", body: JSON.stringify(patch), headers: { Prefer: "return=minimal" } }),
 };

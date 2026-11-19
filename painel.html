@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel da loja · Tiojoao</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Mr+Dafoe&family=Sofia+Sans+Extra+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<script type="module" src="/js/pages/painel.js"></script>
+</head>
+<body data-page="painel">
+<main id="conteudo" class="adm">
+
+<section class="adm-head">
+  <div class="wrap">
+    <p class="script">Bastidores da</p>
+    <h1 class="mega">Loja</h1>
+    <p class="adm-msg" id="admMsg">Carregando…</p>
+  </div>
+</section>
+
+<div id="admApp" hidden>
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2 class="display"><span class="script">Fila de</span> pedidos</h2><p>Pedidos de prêmios e ganhadores de sorteio para entregar.</p></div>
+      <div class="tabs" role="tablist" aria-label="Filtro">
+        <button role="tab" aria-selected="true" data-f="pendente">Pendentes <span class="count" id="nPend"></span></button>
+        <button role="tab" aria-selected="false" data-f="todos">Histórico</button>
+      </div>
+    </div>
+    <div class="adm-orders" id="admOrders"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2 class="display"><span class="script">Itens da</span> vitrine</h2><p>Prêmios e sorteios que aparecem em /loja.</p></div>
+      <button class="btn btn-primary" type="button" id="newItem">+ Novo item</button>
+    </div>
+    <div class="adm-items" id="admItems"></div>
+  </div>
+</section>
+</div>
+
+<dialog class="buy-modal adm-modal cut" id="itemModal" aria-labelledby="itemTitle">
+  <form id="itemForm">
+    <button class="buy-x" type="button" id="itemClose" aria-label="Fechar">✕</button>
+    <h3 class="display" id="itemTitle">Novo item</h3>
+    <input type="hidden" name="item_id">
+    <div class="adm-type">
+      <label><input type="radio" name="tipo" value="premio" checked> 🎁 Prêmio</label>
+      <label><input type="radio" name="tipo" value="sorteio"> 🎟 Sorteio</label>
+    </div>
+    <label class="buy-field">Nome<input name="nome" required maxlength="80" placeholder="Ex.: Gift card Steam R$ 50"></label>
+    <label class="buy-field">Descrição<textarea name="descricao" maxlength="600" rows="3" placeholder="O que a pessoa ganha, regras, prazo de entrega…"></textarea></label>
+    <label class="buy-field">Link da imagem <small>(opcional, começa com https://)</small><input name="imagem" maxlength="500" placeholder="https://…"></label>
+    <div class="adm-row">
+      <label class="buy-field"><span data-lbl-preco>Preço (tjcoins)</span><input name="preco" type="number" min="1" required></label>
+      <label class="buy-field" data-only="premio">Estoque <small>(vazio = sem limite)</small><input name="estoque" type="number" min="0"></label>
+      <label class="buy-field" data-only="sorteio">Vendas até <small>(vazio = até você sortear)</small><input name="encerra_em" type="datetime-local"></label>
+    </div>
+    <div class="adm-row">
+      <label class="buy-field">Limite por pessoa <small>(vazio = sem limite)</small><input name="limite_por_pessoa" type="number" min="1"></label>
+      <label class="buy-field">Ordem <small>(menor aparece primeiro)</small><input name="ordem" type="number" value="0"></label>
+    </div>
+    <label class="buy-field">Pedir para a entrega <small>(vazio = não pede nada)</small><input name="pede_entrega" maxlength="80" placeholder="Ex.: Seu e-mail · Seu link de troca da Steam · Seu endereço"></label>
+    <label class="adm-check"><input type="checkbox" name="ativo" checked> Mostrar na loja</label>
+    <p class="buy-err" id="itemErr" role="alert"></p>
+    <button class="btn btn-primary" type="submit">Salvar item</button>
+  </form>
+</dialog>
+
+</main>
+</body>
+</html>

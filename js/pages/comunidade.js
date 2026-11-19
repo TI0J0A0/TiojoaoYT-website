@@ -1,4 +1,4 @@
-import { $, esc, CONFIG, discordData, me, openLogin, revealScan } from "../site.js";
+import { $, esc, CONFIG, discordData, revealScan } from "../site.js";
 
 /* Discord */
 discordData.then(d => {
@@ -10,8 +10,6 @@ discordData.then(d => {
   $("#dcOnline").hidden = false;
 });
 
-/* tjcoins: botão de entrar só aparece quando o login estiver ativo */
-me.then(d => { if (d.enabled && !d.user) { const b = $("#coinsLogin"); b.hidden = false; b.onclick = openLogin; } });
 
 /* Instagram — posts reais via /api/instagram; sem token, blocos que levam ao perfil */
 const IG = CONFIG.redes.instagram;

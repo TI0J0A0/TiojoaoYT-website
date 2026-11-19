@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loja de tjcoins · Tiojoao</title>
+<meta name="description" content="Troque seus tjcoins por prêmios e bilhetes de sorteio na loja do Tiojoao.">
+<link rel="icon" href="/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Mr+Dafoe&family=Sofia+Sans+Extra+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<script type="module" src="/js/pages/loja.js"></script>
+</head>
+<body data-page="loja">
+<main id="conteudo">
+
+<section class="phead">
+  <div class="sky" aria-hidden="true"><i class="sun"></i><i class="palm l"></i><i class="palm r2"></i></div>
+  <div class="wrap phead-in">
+    <span class="postnum">Nº 07 · tiojoaoyt.com/loja</span><br>
+    <p class="script">Troque seus tjcoins na</p>
+    <h1 class="mega">Loja</h1>
+    <p class="lead">Prêmios de verdade e sorteios com bilhete. Junte tjcoins assistindo às lives e escolha o que levar.</p>
+  </div>
+</section>
+
+<section class="shop-top-sec">
+  <div class="wrap">
+    <div class="shop-wallet cut" id="wallet">
+      <span class="coin big" aria-hidden="true">TJ</span>
+      <div class="sw-txt" id="walletTxt"><b>Carregando…</b></div>
+      <div class="sw-acts" id="walletActs"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="shop-bar">
+      <div class="tabs" role="tablist" aria-label="Tipo">
+        <button role="tab" aria-selected="true" data-tab="premio">Prêmios <span class="count" id="cPremio"></span></button>
+        <button role="tab" aria-selected="false" data-tab="sorteio">Sorteios <span class="count" id="cSorteio"></span></button>
+      </div>
+    </div>
+    <div class="shop-grid" id="shopGrid"></div>
+    <div class="shop-empty cut" id="shopEmpty" hidden></div>
+  </div>
+</section>
+
+<section id="pedidos" hidden>
+  <div class="wrap">
+    <div class="sec-head"><div><h2 class="display"><span class="script">Meus</span> pedidos</h2><p>Acompanhe seus prêmios e bilhetes.</p></div></div>
+    <div class="orders" id="orders"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="howto">
+      <div class="panel cut"><span class="n">01</span><h3>Entre com Twitch ou Kick</h3><p>Seu saldo do StreamElements vem junto no primeiro login com a Twitch (mesmo nick).</p></div>
+      <div class="panel cut"><span class="n">02</span><h3>Escolha o item</h3><p>Prêmios saem do seu saldo na hora. Nos sorteios, cada bilhete é uma chance a mais de ganhar.</p></div>
+      <div class="panel cut"><span class="n">03</span><h3>Receba</h3><p>O Tio confere o pedido e entrega. Se um pedido for recusado, seus tjcoins voltam para a carteira.</p></div>
+    </div>
+  </div>
+</section>
+
+<dialog class="buy-modal cut" id="buyModal" aria-labelledby="buyTitle">
+  <form method="dialog" id="buyForm">
+    <button class="buy-x" type="button" id="buyClose" aria-label="Fechar">✕</button>
+    <div class="buy-img" id="buyImg"></div>
+    <span class="postnum" id="buyKind"></span>
+    <h3 class="display" id="buyTitle"></h3>
+    <p class="buy-desc" id="buyDesc"></p>
+    <label class="buy-field" id="buyQtyRow" hidden>Bilhetes
+      <span class="qty"><button type="button" data-q="-1" aria-label="Menos">−</button><input id="buyQty" type="number" min="1" value="1" inputmode="numeric"><button type="button" data-q="1" aria-label="Mais">+</button></span>
+    </label>
+    <label class="buy-field" id="buyInfoRow" hidden><span id="buyInfoLbl"></span>
+      <input id="buyInfo" type="text" maxlength="300" autocomplete="off">
+      <small>Só o Tio vê esse dado, e ele é usado apenas para a entrega.</small>
+    </label>
+    <div class="buy-total"><span>Total</span><b id="buyTotal"></b></div>
+    <p class="buy-err" id="buyErr" role="alert"></p>
+    <button class="btn btn-primary" type="submit" id="buyGo">Confirmar</button>
+  </form>
+</dialog>
+
+</main>
+</body>
+</html>
