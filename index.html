@@ -362,7 +362,13 @@ header.scrolled{background:rgba(10,6,18,.78);backdrop-filter:blur(16px);-webkit-
 .insta a{position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
 .insta .art{position:absolute;inset:0;transition:transform .4s}
 .insta a:hover .art{transform:scale(1.05)}
-.insta span{position:absolute;left:12px;right:12px;bottom:12px;font-size:12px;font-weight:500;text-shadow:0 1px 6px #000}
+.insta span{position:absolute;left:12px;right:12px;bottom:12px;font-size:12px;font-weight:500;text-shadow:0 1px 6px #000;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.insta img.art{width:100%;height:100%;object-fit:cover}
+.insta a:has(img.art)::after{content:"";position:absolute;inset:auto 0 0;height:55%;background:linear-gradient(transparent,rgba(0,0,0,.75));pointer-events:none}
+.insta a span{z-index:1}
+.insta span small{display:block;margin-top:4px;opacity:.85;font-size:11px}
+.ig-kind{position:absolute;top:10px;right:10px;z-index:1;font-style:normal;font-size:13px;width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}
+.ig-ph span{font-size:15px}
 
 /* ---------- CTA final ---------- */
 .cta{position:relative;border-radius:28px;overflow:hidden;padding:clamp(28px,5vw,64px);border:1px solid var(--line);background:
@@ -840,12 +846,6 @@ const CONFIG = {
     { titulo:"Corte da live #2",  canal:"Cortes",  url:"#", art:"a1" },
     { titulo:"Corte da live #3",  canal:"Cortes",  url:"#", art:"a6" },
   ],
-  instagram: [
-    { legenda:"Legenda do post 1", url:"#", art:"a5" },
-    { legenda:"Legenda do post 2", url:"#", art:"a3" },
-    { legenda:"Legenda do post 3", url:"#", art:"a4" },
-    { legenda:"Legenda do post 4", url:"#", art:"a2" },
-  ],
 };
 
 const $ = s => document.querySelector(s);
@@ -1082,8 +1082,21 @@ document.addEventListener("click", e => {
 });
 
 /* Instagram */
-$("#insta").innerHTML = CONFIG.instagram.map(p => `<a href="${esc(p.url)}" target="_blank" rel="noopener">
-  <div class="art ${p.art} pattern"></div><span>${esc(p.legenda)}</span></a>`).join("");
+/* Instagram — posts reais via /api/instagram; sem token, mostra blocos que levam ao perfil */
+const IG_PERFIL = "https://www.instagram.com/tiojoaoyt";
+const igFallback = () => ["a5","a3","a4","a2"].map((art,i) => `<a href="${IG_PERFIL}" target="_blank" rel="noopener" class="ig-ph">
+  <div class="art ${art} pattern"></div>${i===0 ? '<span>Siga <b>@tiojoaoyt</b> no Instagram ↗</span>' : ''}</a>`).join("");
+const igNum = n => n==null ? "" : n>=1000 ? (n/1000).toLocaleString("pt-BR",{maximumFractionDigits:1})+" mil" : n;
+const igPost = p => `<a href="${esc(p.url)}" target="_blank" rel="noopener" title="${esc(p.legenda.slice(0,140))}">
+  <img class="art" src="${esc(p.img)}" alt="${esc(p.legenda.slice(0,100) || 'Post do Instagram')}" loading="lazy">
+  ${p.tipo!=="foto" ? `<i class="ig-kind" aria-hidden="true">${p.tipo==="video" ? "▶" : "❐"}</i>` : ""}
+  <span>${esc(p.legenda.split("\n")[0].slice(0,90))}${p.curtidas!=null ? `<small>♥ ${igNum(p.curtidas)}${p.comentarios!=null ? ` · 💬 ${igNum(p.comentarios)}` : ""}</small>` : ""}</span></a>`;
+$("#insta").innerHTML = igFallback();
+fetch("/api/instagram").then(r => r.ok ? r.json() : Promise.reject()).then(d => {
+  if (!d.posts || !d.posts.length) return;
+  $("#insta").innerHTML = d.posts.slice(0,8).map(igPost).join("");
+  if (typeof revealScan === "function") revealScan();
+}).catch(() => {});
 
 /* ===== Conta e tjcoins ===== */
 const acct = $("#acct"), loginModal = $("#loginModal");
