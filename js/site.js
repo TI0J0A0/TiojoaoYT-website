@@ -190,7 +190,8 @@ export function mergeLive(d){
   return CONFIG.lives.map(l => {
     const info = d[l.id] || {};
     return { ...l, status: info.status || "unknown", viewers: info.viewers ?? null, game: info.game || null,
-      lastLive: info.lastLive || null, title: info.status === "live" && info.title ? info.title : l.title };
+      lastLive: info.lastLive || null, next: info.next || null, videoId: info.videoId || null,
+      liveUrl: info.status === "live" && info.url ? info.url : null, title: info.status === "live" && info.title ? info.title : l.title };
   });
 }
 export const liveCard = l => {
@@ -198,8 +199,9 @@ export const liveCard = l => {
     : l.status === "offline" ? '<span class="chip">Offline</span>' : '<span class="chip">Sem status</span>';
   const sub = l.status === "live"
     ? `${l.viewers != null ? "👁 " + Number(l.viewers).toLocaleString("pt-BR") + " assistindo · " : ""}${esc(l.title)}`
+    : l.next ? `Próxima live ${new Date(l.next.at).toLocaleString("pt-BR", { day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit" }).replace(",", " às")}: ${esc(l.next.title)}`
     : l.lastLive ? `Última live ${ago(l.lastLive.at)}: ${esc(l.lastLive.title)}` : esc(l.title);
-  return `<a class="live-card cut ${l.status === "live" ? "is-live" : ""}" href="${esc(l.url)}" target="_blank" rel="noopener">
+  return `<a class="live-card cut ${l.status === "live" ? "is-live" : ""}" href="${esc(l.liveUrl || (l.next && l.next.url) || l.url)}" target="_blank" rel="noopener">
     <span class="ico ${l.id}">${ICONS[l.id]}</span>
     <div><h3>${esc(l.name)} ${chip}</h3><p>${sub}</p>${l.status === "live" && l.game ? `<p class="game">🎮 ${esc(l.game)}</p>` : ""}</div>
     <span class="arrow">↗</span></a>`;

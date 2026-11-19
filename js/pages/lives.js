@@ -8,17 +8,17 @@ function render(d){
   const lives = mergeLive(d);
   $("#livesGrid").innerHTML = lives.map(liveCard).join("");
   const tw = lives.find(l => l.id === "twitch");
-  // player aparece só quando estiver ao vivo (Twitch primeiro; senão Kick)
+  // player aparece só quando estiver ao vivo (Twitch primeiro; depois Kick; depois YouTube)
   const box = $("#playerBox");
-  const on = tw.status === "live" ? tw : lives.find(l => l.id === "kick" && l.status === "live");
+  const on = ["twitch", "kick", "youtube"].map(id => lives.find(l => l.id === id)).find(l => l && l.status === "live" && (l.id !== "youtube" || l.videoId));
   if (on) {
-    const src = on.id === "twitch"
-      ? `https://player.twitch.tv/?channel=tiojoaoyt&parent=${encodeURIComponent(location.hostname)}&muted=true`
-      : `https://player.kick.com/${CONFIG.redes.kick.split("/").pop()}?muted=true`;
+    const src = on.id === "twitch" ? `https://player.twitch.tv/?channel=tiojoaoyt&parent=${encodeURIComponent(location.hostname)}&muted=true`
+      : on.id === "kick" ? `https://player.kick.com/${CONFIG.redes.kick.split("/").pop()}?muted=true`
+      : `https://www.youtube-nocookie.com/embed/${encodeURIComponent(on.videoId)}?autoplay=1&mute=1&playsinline=1`;
     const cur = $("#playerFrame iframe");
     if (!cur || cur.dataset.p !== on.id) $("#playerFrame").innerHTML =
-      `<iframe data-p="${on.id}" src="${src}" allowfullscreen allow="autoplay; fullscreen" title="Live na ${on.name}"></iframe>`;
-    $("#playerWhere").textContent = "Ao vivo na " + on.name;
+      `<iframe data-p="${on.id}" src="${src}" allowfullscreen allow="autoplay; fullscreen; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" title="Live: ${on.name}"></iframe>`;
+    $("#playerWhere").textContent = (on.id === "youtube" ? "Ao vivo no " : "Ao vivo na ") + on.name;
     $("#playerTitle").textContent = on.title + (on.game ? " · " + on.game : "");
     box.hidden = false;
     $("#liveLead").textContent = "Estou ao vivo agora! Chega mais.";
