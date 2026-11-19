@@ -10,7 +10,7 @@ export const CONFIG = {
     { id:"twitch",  name:"Twitch",  url:"https://www.twitch.tv/tiojoaoyt",                           title:"Me siga na Twitch" },
     { id:"youtube", name:"YouTube", url:"https://www.youtube.com/channel/UCpT-H-0kRTNbY6bQjK_hjJQ", title:"Me siga no YouTube" },
   ],
-  evento: { titulo:"Live especial com o Tio", data:"2026-11-28T20:00:00-03:00" }, // horário de Brasília
+  evento: { titulo:"Live especial com o Tio", data:"2026-11-20T00:00:00-03:00" }, // horário de Brasília
   redes: {
     twitch:"https://www.twitch.tv/tiojoaoyt", kick:"https://kick.com/tiojoao",
     youtube:"https://www.youtube.com/channel/UCpT-H-0kRTNbY6bQjK_hjJQ", instagram:"https://www.instagram.com/tiojoaoyt",
@@ -216,18 +216,33 @@ liveData.then(d => {
 export function countdown(root){
   const target = new Date(CONFIG.evento.data);
   const el = k => $(`[data-cd="${k}"]`, root);
+  let iv;
   const tick = () => {
     const d = Math.max(0, target - Date.now()) / 1000;
+    if (!d) { // chegou a hora: troca a contagem por um aviso
+      clearInterval(iv);
+      root.innerHTML = `<a class="btn btn-primary cd-now" href="/lives"><span class="dot"></span> Chegou a hora! Vem pra live</a>`;
+      return;
+    }
     el("d").textContent = pad(Math.floor(d / 86400)); el("h").textContent = pad(Math.floor(d % 86400 / 3600));
     el("m").textContent = pad(Math.floor(d % 3600 / 60)); el("s").textContent = pad(Math.floor(d % 60));
   };
-  tick(); setInterval(tick, 1000);
+  iv = setInterval(tick, 1000); tick();
   return target;
 }
 export const countdownHTML = `<div class="countdown" aria-live="off">
   <div class="cut"><b data-cd="d">00</b><span>dias</span></div><div class="cut"><b data-cd="h">00</b><span>horas</span></div>
   <div class="cut"><b data-cd="m">00</b><span>min</span></div><div class="cut"><b data-cd="s">00</b><span>seg</span></div></div>`;
-export const fmtEvento = t => t.toLocaleString("pt-BR", { weekday:"long", day:"2-digit", month:"long", hour:"2-digit", minute:"2-digit", timeZone:"America/Sao_Paulo" }) + " (Brasília)";
+export const fmtEvento = t => {
+  const o = { timeZone:"America/Sao_Paulo" };
+  const hm = t.toLocaleTimeString("pt-BR", { ...o, hour:"2-digit", minute:"2-digit" });
+  // meia-noite: mostra o dia anterior ("quinta, 19 de novembro, à meia-noite") — é como o público fala
+  if (hm === "00:00") {
+    const v = new Date(t - 60000), dia = d => d.toLocaleDateString("pt-BR", { ...o, weekday:"long" }).split("-")[0];
+    return `${v.toLocaleDateString("pt-BR", { ...o, weekday:"long", day:"2-digit", month:"long" })}, à meia-noite (virada para ${dia(t)}) · Brasília`;
+  }
+  return t.toLocaleString("pt-BR", { ...o, weekday:"long", day:"2-digit", month:"long", hour:"2-digit", minute:"2-digit" }) + " (Brasília)";
+};
 
 /* ---------- vídeos do YouTube ---------- */
 const fmtViews = n => n == null ? "" : " · " + (n >= 1000 ? (n/1000).toLocaleString("pt-BR", { maximumFractionDigits:1 }) + " mil" : n) + (n === 1 ? " visualização" : " visualizações");
