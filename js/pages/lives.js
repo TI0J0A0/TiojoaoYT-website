@@ -8,12 +8,18 @@ function render(d){
   const lives = mergeLive(d);
   $("#livesGrid").innerHTML = lives.map(liveCard).join("");
   const tw = lives.find(l => l.id === "twitch");
-  // player da Twitch aparece só quando estiver ao vivo
+  // player aparece só quando estiver ao vivo (Twitch primeiro; senão Kick)
   const box = $("#playerBox");
-  if (tw.status === "live") {
-    if (!$("#playerFrame iframe")) $("#playerFrame").innerHTML =
-      `<iframe src="https://player.twitch.tv/?channel=tiojoaoyt&parent=${encodeURIComponent(location.hostname)}&muted=true" allowfullscreen title="Live na Twitch"></iframe>`;
-    $("#playerTitle").textContent = tw.title + (tw.game ? " · " + tw.game : "");
+  const on = tw.status === "live" ? tw : lives.find(l => l.id === "kick" && l.status === "live");
+  if (on) {
+    const src = on.id === "twitch"
+      ? `https://player.twitch.tv/?channel=tiojoaoyt&parent=${encodeURIComponent(location.hostname)}&muted=true`
+      : `https://player.kick.com/${CONFIG.redes.kick.split("/").pop()}?muted=true`;
+    const cur = $("#playerFrame iframe");
+    if (!cur || cur.dataset.p !== on.id) $("#playerFrame").innerHTML =
+      `<iframe data-p="${on.id}" src="${src}" allowfullscreen allow="autoplay; fullscreen" title="Live na ${on.name}"></iframe>`;
+    $("#playerWhere").textContent = "Ao vivo na " + on.name;
+    $("#playerTitle").textContent = on.title + (on.game ? " · " + on.game : "");
     box.hidden = false;
     $("#liveLead").textContent = "Estou ao vivo agora! Chega mais.";
   } else { box.hidden = true; $("#playerFrame").innerHTML = ""; }

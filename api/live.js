@@ -1,10 +1,13 @@
-// GET /api/live — diz se o Tiojoao está ao vivo (por enquanto: Twitch).
+// GET /api/live — diz se o Tiojoao está ao vivo na Twitch e na Kick.
 // Roda no servidor (Vercel Function), então o Client Secret nunca vai para o navegador.
 //
 // Variáveis de ambiente necessárias (configure na Vercel ou no arquivo .env.local):
 //   TWITCH_CLIENT_ID      → Client ID do app em dev.twitch.tv
 //   TWITCH_CLIENT_SECRET  → Client Secret do app
 //   TWITCH_LOGIN          → (opcional) nome do canal, padrão "tiojoaoyt"
+//   KICK_CLIENT_ID        → Client ID do app em kick.com/settings/developer
+//   KICK_CLIENT_SECRET    → Client Secret do app
+//   KICK_SLUG             → (opcional) canal na Kick, padrão "tiojoao"
 
 let token = { value: null, expiresAt: 0 };
 
@@ -58,15 +61,53 @@ async function twitchStatus() {
   };
 }
 
+/* ---------- Kick (API oficial: api.kick.com/public/v1) ---------- */
+let kickToken = { value: null, expiresAt: 0 };
+async function getKickToken(force = false) {
+  if (!force && kickToken.value && Date.now() < kickToken.expiresAt) return kickToken.value;
+  const r = await fetch("https://id.kick.com/oauth/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      client_id: process.env.KICK_CLIENT_ID,
+      client_secret: process.env.KICK_CLIENT_SECRET,
+      grant_type: "client_credentials",
+    }),
+  });
+  if (!r.ok) throw new Error(`kick token ${r.status}`);
+  const j = await r.json();
+  kickToken = { value: j.access_token, expiresAt: Date.now() + ((j.expires_in || 3600) - 300) * 1000 };
+  return kickToken.value;
+}
+
+async function kickStatus() {
+  if (!process.env.KICK_CLIENT_ID || !process.env.KICK_CLIENT_SECRET) return { status: "unknown", error: "sem credenciais" };
+  const slug = process.env.KICK_SLUG || "tiojoao";
+  const call = async (force) => fetch(`https://api.kick.com/public/v1/channels?slug=${encodeURIComponent(slug)}`,
+    { headers: { Authorization: `Bearer ${await getKickToken(force)}`, Accept: "application/json" } });
+  let r = await call(false);
+  if (r.status === 401) r = await call(true);
+  if (!r.ok) throw new Error(`kick channels ${r.status}`);
+  const c = (await r.json()).data?.[0];
+  if (!c) throw new Error("kick sem canal");
+  const s = c.stream || {};
+  if (!s.is_live) return { status: "offline" };
+  return {
+    status: "live",
+    viewers: s.viewer_count ?? null,
+    title: c.stream_title || "",
+    game: c.category?.name || null,
+    startedAt: s.start_time || null,
+    thumb: s.thumbnail || null,
+  };
+}
+
+// nunca afirma online/offline se a API falhar
+const safe = (nome, fn) => fn().catch(e => { console.error(nome + ":", e.message); return { status: "unknown" }; });
+
 export default async function handler(req, res) {
-  let twitch;
-  try {
-    twitch = await twitchStatus();
-  } catch (e) {
-    console.error("twitch:", e.message);
-    twitch = { status: "unknown" }; // nunca afirma online/offline se a API falhar
-  }
-  // CDN guarda a resposta por 60 s: a Twitch é consultada no máximo 1x por minuto
+  const [twitch, kick] = await Promise.all([safe("twitch", twitchStatus), safe("kick", kickStatus)]);
+  // CDN guarda a resposta por 60 s: as plataformas são consultadas no máximo 1x por minuto
   res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=120");
-  res.status(200).json({ twitch, updatedAt: new Date().toISOString() });
+  res.status(200).json({ twitch, kick, updatedAt: new Date().toISOString() });
 }
