@@ -47,10 +47,14 @@ discordData.then(d => {
 /* arte do topo acompanha o mouse */
 const hero = $(".hero");
 if (matchMedia("(hover:hover) and (prefers-reduced-motion:no-preference)").matches) {
+  let mv = null, mRaf = 0; // no máximo 1 atualização por quadro
   hero.addEventListener("mousemove", e => {
-    const r = hero.getBoundingClientRect();
-    hero.style.setProperty("--mx", ((e.clientX - r.left) / r.width - .5).toFixed(3));
-    hero.style.setProperty("--my", ((e.clientY - r.top) / r.height - .5).toFixed(3));
+    mv = e; if (mRaf) return;
+    mRaf = requestAnimationFrame(() => {
+      mRaf = 0; const r = hero.getBoundingClientRect();
+      hero.style.setProperty("--mx", ((mv.clientX - r.left) / r.width - .5).toFixed(2));
+      hero.style.setProperty("--my", ((mv.clientY - r.top) / r.height - .5).toFixed(2));
+    });
   });
   hero.addEventListener("mouseleave", () => { hero.style.setProperty("--mx", 0); hero.style.setProperty("--my", 0); });
 }

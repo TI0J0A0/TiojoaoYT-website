@@ -114,12 +114,19 @@ document.body.insertAdjacentHTML("beforeend", `
 
 /* topo: fundo ao rolar + barra de progresso */
 const head = $(".site-head"), progress = $("#progress");
+// no máximo 1 atualização por quadro; a altura da página só é medida quando muda
+let maxScroll = 0, scrollRaf = 0, wasScrolled = null;
+const measure = () => { maxScroll = document.documentElement.scrollHeight - innerHeight; };
 function onScroll(){
-  head.classList.toggle("scrolled", scrollY > 20);
-  const max = document.documentElement.scrollHeight - innerHeight;
-  progress.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+  scrollRaf = 0;
+  const s = scrollY > 20;
+  if (s !== wasScrolled) { head.classList.toggle("scrolled", s); wasScrolled = s; }
+  progress.style.transform = `scaleX(${maxScroll > 0 ? Math.min(1, scrollY / maxScroll) : 0})`;
 }
-addEventListener("scroll", onScroll, { passive:true }); onScroll();
+addEventListener("scroll", () => { if (!scrollRaf) scrollRaf = requestAnimationFrame(onScroll); }, { passive:true });
+addEventListener("resize", () => { measure(); onScroll(); }, { passive:true });
+if ("ResizeObserver" in window) new ResizeObserver(measure).observe(document.body);
+measure(); onScroll();
 
 /* menu Redes (clique abre no celular/teclado) */
 const redes = $(".has-sub"), redesBtn = $("#redesBtn");
@@ -139,6 +146,22 @@ $("#openMenu").onclick = () => setMenu(true);
 $("#closeMenu").onclick = () => setMenu(false);
 drawer.onclick = e => { if (e.target === drawer || e.target.closest("a")) setMenu(false); };
 addEventListener("keydown", e => { if (e.key === "Escape") { setMenu(false); closeRedes(); } });
+
+/* ---------- desempenho ---------- */
+// animações contínuas (palmeiras, carimbo, faixa, moedas) param quando a área sai da tela
+if ("IntersectionObserver" in window) {
+  const animIO = new IntersectionObserver(es => es.forEach(en => en.target.classList.toggle("anim-off", !en.isIntersecting)));
+  const watchAnims = () => $$(".hero, .phead, .ticker, .c-coins, .t-lives, .rv-hero, .adm-head").forEach(el => {
+    if (!el.dataset.anim) { el.dataset.anim = 1; animIO.observe(el); }
+  });
+  watchAnims(); addEventListener("load", watchAnims);
+}
+// abre a próxima página em segundo plano quando a pessoa passa o mouse/toca no link
+if (HTMLScriptElement.supports?.("speculationrules")) {
+  const sr = document.createElement("script"); sr.type = "speculationrules";
+  sr.textContent = JSON.stringify({ prerender: [{ where: { and: [{ href_matches: "/*" }, { not: { href_matches: "/api/*" } }, { not: { href_matches: "/painel" } }] }, eagerness: "moderate" }] });
+  document.head.append(sr);
+}
 
 /* ---------- aparecer ao rolar ---------- */
 const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(en => {
